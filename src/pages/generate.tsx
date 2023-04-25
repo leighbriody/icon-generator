@@ -4,9 +4,17 @@ import Link from "next/link";
 import Input from "~/components/Input";
 import FormGroup from "~/components/FormGroup";
 import { useState } from "react";
+import { api } from "~/utils/api";
+import { date } from "zod";
 const GeneratePage: NextPage = () => {
   const [form, setForm] = useState({
     prompt: "",
+  });
+
+  const generateIcon = api.generate.generateIcon.useMutation({
+    onSuccess() {
+      console.log("mutation finihsed ");
+    },
   });
 
   function updateForm(key: string) {
@@ -22,7 +30,11 @@ const GeneratePage: NextPage = () => {
     //prevent default prevents the page from reloading
     e.preventDefault();
     //TODO - add logic to handle form submission
+    generateIcon.mutate({
+      prompt: form.prompt,
+    });
   }
+  
   return (
     <>
       <Head>
