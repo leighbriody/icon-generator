@@ -6,6 +6,8 @@ import FormGroup from "~/components/FormGroup";
 import { useState } from "react";
 import { api } from "~/utils/api";
 import { date } from "zod";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { Button } from "~/components/Button";
 const GeneratePage: NextPage = () => {
   const [form, setForm] = useState({
     prompt: "",
@@ -34,7 +36,10 @@ const GeneratePage: NextPage = () => {
       prompt: form.prompt,
     });
   }
-  
+
+  const session = useSession();
+  const isLoggedIn = !!session.data;
+
   return (
     <>
       <Head>
@@ -43,6 +48,24 @@ const GeneratePage: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-center ">
+        {!isLoggedIn && (
+          <Button
+            onClick={() => {
+              signIn().catch(console.error);
+            }}
+          >
+            Login
+          </Button>
+        )}
+        {isLoggedIn && (
+          <Button
+            onClick={() => {
+              signOut().catch(console.error);
+            }}
+          >
+            Logout
+          </Button>
+        )}
         <form className="flex flex-col gap-4" onSubmit={handleFormSubmit}>
           <FormGroup>
             <label>Propmt</label>
