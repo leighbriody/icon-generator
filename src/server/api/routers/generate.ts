@@ -77,12 +77,19 @@ export const generateRouter = createTRPCRouter({
       //TODO - Make fetch to dalle api
       const base64EncodedImage = await generateIcon(input.prompt);
 
+      const icon = await ctx.prisma.icon.create({
+        data: {
+          prompt: input.prompt,
+          userId: ctx.session.user.id,
+        },
+      });
+
       //todo - save Image to s3
       await s3
         .putObject({
           Bucket: "leighs-icon-generator",
           Body: Buffer.from(base64EncodedImage!, "base64"),
-          Key: `${ctx.session.user.id}-${Date.now()}.png`,
+          Key: icon.id,
           ContentEncoding: "base64",
           ContentType: "image/png",
         })
