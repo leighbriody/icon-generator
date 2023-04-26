@@ -10,7 +10,10 @@
 const config = {
   reactStrictMode: true,
   images: {
-    domains: ["oaidalleapiprodscus.blob.core.windows.net", "localhost"],
+    domains: [
+      "oaidalleapiprodscus.blob.core.windows.net",
+      "leighs-icon-generator.s3.amazonaws.com",
+    ],
   },
 
   /**

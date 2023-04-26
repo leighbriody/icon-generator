@@ -1,12 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 import { type NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import Input from "~/components/Input";
 import FormGroup from "~/components/FormGroup";
 import { useState } from "react";
 import { api } from "~/utils/api";
-import { date } from "zod";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { Button } from "~/components/Button";
 import Image from "next/image";
@@ -84,8 +82,8 @@ const GeneratePage: NextPage = () => {
           </button>
         </form>
         {/* next auth image will scale the image in size , better performance */}
-        <img
-          src={`data:image/png;base64,${imageUrl}`}
+        <Image
+          src={imageUrl}
           alt="Picture of the author"
           width={100}
           height={100}
