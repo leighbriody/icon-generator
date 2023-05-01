@@ -9,6 +9,7 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import clsx from "clsx";
 import { Button } from "~/components/Button";
+import { setErrorMap } from "zod";
 
 const colors = [
   "blue",
@@ -32,19 +33,34 @@ const shapes = [
   "octagon",
 ];
 
+const styles = [
+  "claymorphic",
+  "flat",
+  "3d rendered",
+  "pixelated",
+  "illustrated with color pencil",
+  "sketched",
+  "water color",
+];
+
 const GeneratePage: NextPage = () => {
   const [form, setForm] = useState({
     prompt: "",
     color: "",
     numberOfIcons: "1",
     shape: "",
+    style: "",
   });
 
+  const [error, setError] = useState("");
   const [imagesUrl, setImagesUrl] = useState<{ imageUrl: string }[]>([]);
 
   const generateIcon = api.generate.generateIcon.useMutation({
     onSuccess(data) {
       setImagesUrl(data);
+    },
+    onError(error) {
+      setError(error.message);
     },
   });
 
@@ -64,7 +80,6 @@ const GeneratePage: NextPage = () => {
     generateIcon.mutate({
       ...form,
       numberOfIcons: parseInt(form.numberOfIcons),
-  
     });
   }
 
@@ -129,6 +144,24 @@ const GeneratePage: NextPage = () => {
             ))}
           </FormGroup>
 
+          <h2 className="text-xl">3. Pick your icon style.</h2>
+          <FormGroup className="mb-12 grid grid-cols-4">
+            {styles.map((style) => (
+              <label key={style} className={clsx("flex gap-2 text-2xl", style)}>
+                <input
+                  key={style}
+                  required
+                  type="radio"
+                  name="shape"
+                  value={style}
+                  checked={style === form.style}
+                  onChange={() => setForm((prev) => ({ ...prev, style }))}
+                ></input>
+                {style}
+              </label>
+            ))}
+          </FormGroup>
+
           <h2 className="text-xl">4. How many do you want.</h2>
           <FormGroup className="mb-12 grid grid-cols-4">
             <label className="mb-12">How many icons do you want?</label>
@@ -140,6 +173,7 @@ const GeneratePage: NextPage = () => {
               onChange={updateForm("numberOfIcons")}
             ></Input>
           </FormGroup>
+          {error && <p className="text-red-500">{error}</p>}
           <Button
             isLoading={generateIcon.isLoading}
             className="rounde py- px-4"
