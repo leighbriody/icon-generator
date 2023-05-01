@@ -101,7 +101,6 @@ const GeneratePage: NextPage = () => {
           </Button>
         </form>
 
-        {/* next auth image will scale the image in size , better performance */}
         {imageUrl && (
           <>
             <h2 className="text-xl">Your Icons</h2>
