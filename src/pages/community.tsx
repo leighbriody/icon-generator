@@ -15,7 +15,7 @@ const CollectionPage: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="container mx-auto mt-24  flex min-h-screen flex-col items-center gap-4 px-8">
-        <h1 className="text-4xl">Your Icons</h1>
+        <h1 className="text-4xl">Community Icons</h1>
         <ul className="grid snap-mandatory grid-cols-2">
           {icons.data?.map((icon: Icon) => (
             <li key={icon.id}>

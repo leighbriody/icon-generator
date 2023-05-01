@@ -9,7 +9,7 @@ export function Button(
 ) {
   const color =
     (props.variant ?? "primary") === "primary"
-      ? "bg-blue-400 hover:bg-blue-500"
+      ? "bg-blue-600 hover:bg-blue-500 text-white"
       : "bg-gray-400 hover:bg-gray-500";
   return (
     <button
