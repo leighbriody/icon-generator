@@ -79,7 +79,7 @@ export const generateRouter = createTRPCRouter({
 
       //TODO - Make fetch to dalle api
       const finalPrompt = `a modern icon in ${input.color} of a ${input.prompt}`;
-      
+
       const base64EncodedImage = await generateIcon(finalPrompt);
 
       const icon = await ctx.prisma.icon.create({

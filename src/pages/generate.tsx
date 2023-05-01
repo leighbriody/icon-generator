@@ -104,7 +104,7 @@ const GeneratePage: NextPage = () => {
         {imageUrl && (
           <>
             <h2 className="text-xl">Your Icons</h2>
-            <section className="grid grid-cols-4 gap-4 mb-12">
+            <section className="mb-12 grid grid-cols-4 gap-4">
               <Image
                 src={imageUrl}
                 alt="Picture of the author"
