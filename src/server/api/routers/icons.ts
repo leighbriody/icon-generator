@@ -19,4 +19,15 @@ export const iconsRouter = createTRPCRouter({
     });
     return icons;
   }),
+  getCommunityIcons: publicProcedure.query(async ({ ctx }) => {
+    //get 50 random icons
+    const icons = await ctx.prisma.icon.findMany({
+      take: 50,
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    return icons;
+  }),
 });

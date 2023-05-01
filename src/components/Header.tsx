@@ -2,11 +2,15 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { useBuyCredits } from "~/hooks/useBuyCredits";
 import { Button } from "./Button";
 import { PrimaryLink } from "./PrimaryLink";
+import { api } from "~/utils/api";
 
 export function Header() {
   const session = useSession();
   const isLoggedIn = !!session.data;
   const { buyCredits } = useBuyCredits();
+
+  const credits = api.user.getCredits.useQuery();
+
   return (
     <header className="container mx-auto flex h-16 items-center justify-between px-4 dark:bg-gray-800">
       <PrimaryLink href={"/"}>Icon Generator</PrimaryLink>
@@ -15,9 +19,14 @@ export function Header() {
           <PrimaryLink href="/generate">Generate</PrimaryLink>
         </li>
         {isLoggedIn && (
-          <li>
-            <PrimaryLink href="/collection">Collection</PrimaryLink>
-          </li>
+          <>
+            <li>
+              <PrimaryLink href="/collection">Collection</PrimaryLink>
+            </li>
+            <li>
+              <PrimaryLink href="/community">Community</PrimaryLink>
+            </li>
+          </>
         )}
       </ul>
       <ul className="flex gap-2">
@@ -35,6 +44,10 @@ export function Header() {
         )}
         {isLoggedIn && (
           <>
+            <div className="flex items-center justify-center">
+              Credits Remaining: {credits.data}
+            </div>
+
             <li>
               <Button
                 onClick={() => {

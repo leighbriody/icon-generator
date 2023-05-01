@@ -21,19 +21,30 @@ const colors = [
   "orange",
 ];
 
+const shapes = [
+  "circle",
+  "square",
+  "rounded",
+  "star",
+  "heart",
+  "diamond",
+  "hexagon",
+  "octagon",
+];
+
 const GeneratePage: NextPage = () => {
   const [form, setForm] = useState({
     prompt: "",
     color: "",
+    numberOfIcons: "1",
+    shape: "",
   });
 
-  const [imageUrl, setImageUrl] = useState("");
+  const [imagesUrl, setImagesUrl] = useState<{ imageUrl: string }[]>([]);
 
   const generateIcon = api.generate.generateIcon.useMutation({
     onSuccess(data) {
-      console.log("mutation finihsed ");
-      if (!data.imageUrl) return;
-      setImageUrl(data.imageUrl);
+      setImagesUrl(data);
     },
   });
 
@@ -52,6 +63,8 @@ const GeneratePage: NextPage = () => {
     //TODO - add logic to handle form submission
     generateIcon.mutate({
       ...form,
+      numberOfIcons: parseInt(form.numberOfIcons),
+  
     });
   }
 
@@ -76,13 +89,18 @@ const GeneratePage: NextPage = () => {
           </h2>
           <FormGroup>
             <label>Propmt</label>
-            <Input value={form.prompt} onChange={updateForm("prompt")}></Input>
+            <Input
+              required
+              value={form.prompt}
+              onChange={updateForm("prompt")}
+            ></Input>
           </FormGroup>
           <h2 className="text-xl">2. Pick your icon color.</h2>
           <FormGroup className="mb-12 grid grid-cols-4">
             {colors.map((color) => (
               <label key={color} className={clsx("flex gap-2 text-2xl", color)}>
                 <input
+                  required
                   type="radio"
                   name="color"
                   value={color}
@@ -93,6 +111,35 @@ const GeneratePage: NextPage = () => {
               </label>
             ))}
           </FormGroup>
+
+          <h2 className="text-xl">3. Pick your icon shape.</h2>
+          <FormGroup className="mb-12 grid grid-cols-4">
+            {shapes.map((shape) => (
+              <label key={shape} className={clsx("flex gap-2 text-2xl", shape)}>
+                <input
+                  required
+                  type="radio"
+                  name="shape"
+                  value={shape}
+                  checked={shape === form.shape}
+                  onChange={() => setForm((prev) => ({ ...prev, shape }))}
+                ></input>
+                {shape}
+              </label>
+            ))}
+          </FormGroup>
+
+          <h2 className="text-xl">4. How many do you want.</h2>
+          <FormGroup className="mb-12 grid grid-cols-4">
+            <label className="mb-12">How many icons do you want?</label>
+            <Input
+              required
+              inputMode="numeric"
+              pattern="[1-9]|10"
+              value={form.numberOfIcons}
+              onChange={updateForm("numberOfIcons")}
+            ></Input>
+          </FormGroup>
           <Button
             isLoading={generateIcon.isLoading}
             className="rounde py- px-4"
@@ -101,16 +148,19 @@ const GeneratePage: NextPage = () => {
           </Button>
         </form>
 
-        {imageUrl && (
+        {imagesUrl.length > 0 && (
           <>
             <h2 className="text-xl">Your Icons</h2>
             <section className="mb-12 grid grid-cols-4 gap-4">
-              <Image
-                src={imageUrl}
-                alt="Picture of the author"
-                width={100}
-                height={100}
-              />
+              {imagesUrl.map(({ imageUrl }) => (
+                <Image
+                  key={imageUrl}
+                  src={imageUrl}
+                  alt="Picture of the author"
+                  width="512"
+                  height="512"
+                />
+              ))}
             </section>
           </>
         )}
