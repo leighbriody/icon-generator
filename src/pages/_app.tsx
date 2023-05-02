@@ -7,10 +7,17 @@ import { api } from "~/utils/api";
 import "~/styles/globals.css";
 import { Header } from "~/components/Header";
 
+import { initFlowbite } from "flowbite";
+import { useEffect } from "react";
+
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
+  useEffect(() => {
+    initFlowbite();
+  }, []);
+
   return (
     <SessionProvider session={session}>
       <Header></Header>

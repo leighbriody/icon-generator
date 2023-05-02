@@ -19,7 +19,7 @@ function HeroBanner() {
           </h1>
           <p className="mb-6 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-8 lg:text-xl">
             Generating Icons has never been easier , we use AI to help you
-            created icons  without the need for a designer.
+            created icons without the need for a designer.
           </p>
           <div className="bg-primary-700 hover:bg-primary-800 focus:ring-primary-300 dark:focus:ring-primary-900 mr-3 inline-flex items-center justify-center rounded-lg px-5 py-3 text-center text-base font-medium text-white focus:ring-4">
             <PrimaryLinkButton href={"/generate"} className="self-start">
@@ -72,6 +72,31 @@ function HeroBanner() {
   );
 }
 
+export function Section() {
+  return (
+    <section className="tails-selected-element h-auto bg-red-100">
+      <div className="mx-auto max-w-7xl px-10 py-24">
+        <div className="mx-auto w-full text-left md:text-center">
+          <h1 className="mx-auto mb-6 max-w-5xl text-5xl font-extrabold leading-none tracking-normal text-gray-900 sm:text-6xl md:text-6xl md:tracking-tight lg:text-7xl">
+            {" "}
+            The{" "}
+            <span className="w-full bg-gradient-to-r from-green-400 via-blue-500 to-purple-500 bg-clip-text text-transparent lg:inline">
+              Number One Source
+            </span>{" "}
+            for
+            <br className="hidden lg:block" /> all your digital assets.{" "}
+          </h1>
+          <p className="mb-6 px-0 text-lg text-gray-600 md:text-xl lg:px-24">
+            {" "}
+            Say hello to the number one source for all your design needs. Drag
+            and drop designs, edit designs, and modify the components to help
+            tell your story.{" "}
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
 const HomePage: NextPage = () => {
   return (
     <>

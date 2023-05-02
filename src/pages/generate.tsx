@@ -3,13 +3,14 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import Input from "~/components/Input";
 import FormGroup from "~/components/FormGroup";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { api } from "~/utils/api";
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import clsx from "clsx";
 import { Button } from "~/components/Button";
 import { setErrorMap } from "zod";
+import router from "next/router";
 
 const colors = [
   "blue",
@@ -85,6 +86,8 @@ const GeneratePage: NextPage = () => {
 
   const session = useSession();
   const isLoggedIn = !!session.data;
+
+  //use effect that if the user is not logged in show them an alert saying they need to
 
   return (
     <>
