@@ -77,7 +77,6 @@ const GeneratePage: NextPage = () => {
   function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
     //prevent default prevents the page from reloading
     e.preventDefault();
-    //TODO - add logic to handle form submission
     generateIcon.mutate({
       ...form,
       numberOfIcons: parseInt(form.numberOfIcons),
