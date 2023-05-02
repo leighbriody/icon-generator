@@ -20,7 +20,7 @@ const CollectionPage: NextPage = () => {
         <h1 className="text-4xl">Community Icons</h1>
         <ul className="grid grid-cols-2 gap-8 sm:grid-cols-4 sm:gap-12">
           {icons.data?.map((icon: Icon) => (
-            <li key={icon.id} className="rounded overflow-hidden">
+            <li key={icon.id} className="overflow-hidden rounded">
               <Image
                 className="w-full"
                 width="100"
@@ -32,10 +32,8 @@ const CollectionPage: NextPage = () => {
           ))}
         </ul>
       </main>
-      
     </>
   );
 };
-
 
 export default CollectionPage;

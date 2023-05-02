@@ -10,7 +10,17 @@ import Image from "next/image";
 import clsx from "clsx";
 import { Button } from "~/components/Button";
 import { setErrorMap } from "zod";
-import router from "next/router";
+
+const assets = [
+  "Logo",
+  "Icons",
+  "Painting",
+  "Wallpaper",
+  "Photographs",
+  "Vector Graphics",
+  "Iphone App Icon",
+  "Patterns",
+];
 
 const colors = [
   "blue",
@@ -20,7 +30,7 @@ const colors = [
   "pink",
   "black",
   "white",
-  "orange",
+  "rainbow",
 ];
 
 const shapes = [
@@ -34,13 +44,37 @@ const shapes = [
   "octagon",
 ];
 
+const backgroundColors = [
+  "dark",
+  "light",
+  "gradient",
+  "white",
+  "black",
+  "white",
+  "rainbow",
+  "transparent",
+  "blue",
+];
+
+// const styles = [
+//   "claymorphic",
+//   "flat",
+//   "3d rendered",
+//   "pixelated",
+//   "illustrated with color pencil",
+//   "sketched",
+//   "water color",
+// ];
+
 const styles = [
   "claymorphic",
   "flat",
   "3d rendered",
   "pixelated",
-  "illustrated with color pencil",
-  "sketched",
+  "realistic",
+  "retro",
+  "cartoonish",
+  "futuristic",
   "water color",
 ];
 
@@ -51,6 +85,8 @@ const GeneratePage: NextPage = () => {
     numberOfIcons: "1",
     shape: "",
     style: "",
+    asset: "",
+    background: "",
   });
 
   const [error, setError] = useState("");
@@ -77,6 +113,7 @@ const GeneratePage: NextPage = () => {
   function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
     //prevent default prevents the page from reloading
     e.preventDefault();
+    //TODO - add logic to handle form submission
     generateIcon.mutate({
       ...form,
       numberOfIcons: parseInt(form.numberOfIcons),
@@ -107,13 +144,50 @@ const GeneratePage: NextPage = () => {
           <FormGroup>
             <label>Propmt</label>
             <Input
+              placeholder="A happy dog with a top hat . . "
               required
               value={form.prompt}
               onChange={updateForm("prompt")}
+              className="w-full md:w-1/2"
             ></Input>
           </FormGroup>
+          <h2 className="text-xl">2. Pick your asset type.</h2>
+          <FormGroup className="mb-12 grid grid-cols-2 sm:grid-cols-4">
+            {assets.map((asset) => (
+              <label key={asset} className={clsx("flex gap-2 text-2xl", asset)}>
+                <input
+                  required
+                  type="radio"
+                  name="asset"
+                  value={asset}
+                  checked={asset === form.asset}
+                  onChange={() => setForm((prev) => ({ ...prev, asset }))}
+                ></input>
+                {asset}
+              </label>
+            ))}
+          </FormGroup>
+          <h2 className="text-xl">2. Pick your background color type.</h2>
+          <FormGroup className="mb-12 grid grid-cols-2 sm:grid-cols-4">
+            {backgroundColors.map((background) => (
+              <label
+                key={background}
+                className={clsx("flex gap-2 text-2xl", background)}
+              >
+                <input
+                  required
+                  type="radio"
+                  name="background"
+                  value={background}
+                  checked={background === form.background}
+                  onChange={() => setForm((prev) => ({ ...prev, background }))}
+                ></input>
+                {background}
+              </label>
+            ))}
+          </FormGroup>
           <h2 className="text-xl">2. Pick your icon color.</h2>
-          <FormGroup className="mb-12 grid grid-cols-4">
+          <FormGroup className="mb-12 grid grid-cols-2 sm:grid-cols-4">
             {colors.map((color) => (
               <label key={color} className={clsx("flex gap-2 text-2xl", color)}>
                 <input
@@ -130,7 +204,7 @@ const GeneratePage: NextPage = () => {
           </FormGroup>
 
           <h2 className="text-xl">3. Pick your icon shape.</h2>
-          <FormGroup className="mb-12 grid grid-cols-4">
+          <FormGroup className="mb-12 grid grid-cols-2 sm:grid-cols-4">
             {shapes.map((shape) => (
               <label key={shape} className={clsx("flex gap-2 text-2xl", shape)}>
                 <input
@@ -146,15 +220,14 @@ const GeneratePage: NextPage = () => {
             ))}
           </FormGroup>
 
-          <h2 className="text-xl">3. Pick your icon style.</h2>
-          <FormGroup className="mb-12 grid grid-cols-4">
+          <h2 className="text-xl">4. Pick your icon style.</h2>
+          <FormGroup className="mb-12 grid grid-cols-2 sm:grid-cols-4">
             {styles.map((style) => (
               <label key={style} className={clsx("flex gap-2 text-2xl", style)}>
                 <input
-                  key={style}
                   required
                   type="radio"
-                  name="shape"
+                  name="style"
                   value={style}
                   checked={style === form.style}
                   onChange={() => setForm((prev) => ({ ...prev, style }))}
@@ -165,23 +238,42 @@ const GeneratePage: NextPage = () => {
           </FormGroup>
 
           <h2 className="text-xl">4. How many do you want.</h2>
-          <FormGroup className="mb-12 grid grid-cols-4">
-            <label className="mb-12">How many icons do you want?</label>
+          <FormGroup>
+            <label className="mb-4 sm:col-span-3 sm:mb-0">
+              How many icons do you want?
+            </label>
             <Input
               required
               inputMode="numeric"
               pattern="[1-9]|10"
               value={form.numberOfIcons}
               onChange={updateForm("numberOfIcons")}
+              className="w-full md:w-1/2"
             ></Input>
           </FormGroup>
+
           {error && <p className="text-red-500">{error}</p>}
-          <Button
-            isLoading={generateIcon.isLoading}
-            className="rounde py- px-4"
-          >
-            Submit
-          </Button>
+
+          {isLoggedIn && (
+            <Button
+              isLoading={generateIcon.isLoading}
+              className="rounde py- px-4"
+            >
+              Submit
+            </Button>
+          )}
+
+          {!isLoggedIn && (
+             <Button
+             variant="secondary"
+             onClick={() => {
+               signIn().catch(console.error);
+             }}
+           >
+             Login to Generate
+           </Button>
+          )}
+
         </form>
 
         {imagesUrl.length > 0 && (
@@ -193,8 +285,8 @@ const GeneratePage: NextPage = () => {
                   key={imageUrl}
                   src={imageUrl}
                   alt="Picture of the author"
-                  width="512"
-                  height="512"
+                  width="1024"
+                  height="1024"
                 />
               ))}
             </section>

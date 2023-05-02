@@ -55,6 +55,8 @@ export const generateRouter = createTRPCRouter({
         numberOfIcons: z.number().min(1).max(10),
         shape: z.string(),
         style: z.string(),
+        asset: z.string(),
+        background: z.string(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -81,8 +83,9 @@ export const generateRouter = createTRPCRouter({
       }
 
       //TODO - Make fetch to dalle api
-      const finalPrompt = `a modern ${input.shape}  icon in ${input.color} of a ${input.prompt} , ${input.style} , minimalisttic , high quality , trending on art station , unreal engine graphics quality `;
-
+      const finalPrompt = `a modern ${input.shape}  ${input.asset} in ${input.color} of a ${input.prompt} in the style of ${input.style} with a background color of ${input.background} minimalisttic , high quality , trending on art station , unreal engine graphics quality `;
+      console.log("******");
+      console.log("final prompt", finalPrompt);
       const base64EncodedImages = await generateIcon(
         finalPrompt,
         input.numberOfIcons

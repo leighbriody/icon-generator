@@ -3,7 +3,7 @@ import { useBuyCredits } from "~/hooks/useBuyCredits";
 import { Button } from "./Button";
 import { PrimaryLink } from "./PrimaryLink";
 import { api } from "~/utils/api";
-
+import Image from "next/image";
 export function Header() {
   const session = useSession();
   const isLoggedIn = !!session.data;
@@ -15,9 +15,17 @@ export function Header() {
     <header>
       <nav className="border-gray-200 bg-gray-100 px-4 py-2.5 dark:bg-gray-800 lg:px-6">
         <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between">
-          <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-            <PrimaryLink href={"/"}>Icon Generator</PrimaryLink>
-          </span>
+          <div className="flex items-center">
+            <Image
+              src="/brain.png"
+              alt="Picture of the author"
+              width={100}
+              height={100}
+            />
+            <span className="ml-4 self-center whitespace-nowrap text-xl font-semibold dark:text-white">
+              <PrimaryLink href={"/"}>Asset Brain AI</PrimaryLink>
+            </span>
+          </div>
           <div className="flex items-center lg:order-2">
             <ul>
               {isLoggedIn && (
