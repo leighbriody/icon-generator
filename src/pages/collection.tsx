@@ -15,7 +15,7 @@ const CollectionPage: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="container mx-auto mt-24 flex flex-col items-center gap-8 px-8">
-        <h1 className="text-4xl">Your Icons</h1>
+        <h1 className="text-4xl">Your Assets</h1>
         <ul className="grid grid-cols-2 gap-8 sm:grid-cols-4 sm:gap-12">
           {icons.data?.map((icon: Icon) => (
             <li key={icon.id} className="rounded overflow-hidden">

@@ -4,6 +4,7 @@ import Image from "next/image";
 import Content from "~/components/Content";
 import Price from "~/components/Price";
 import { PrimaryLinkButton } from "~/components/PrimaryLinkButton";
+import { References } from "~/components/References";
 
 function HeroBanner() {
   return (
@@ -12,7 +13,7 @@ function HeroBanner() {
         <div className="mx-auto grid max-w-screen-xl px-4 py-8 lg:grid-cols-12 lg:gap-8 lg:py-16 xl:gap-0">
           <div className="mr-auto place-self-center lg:col-span-7">
             <h1 className="mb-4 max-w-2xl text-4xl font-extrabold leading-none tracking-tight dark:text-white md:text-5xl xl:text-6xl">
-              Generate Icons Using{" "}
+              Generate Digital Assets Using{" "}
               <span
                 className="block text-indigo-600 xl:inline"
                 data-primary="indigo-600"
@@ -21,12 +22,12 @@ function HeroBanner() {
               </span>
             </h1>
             <p className="mb-6 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-8 lg:text-xl">
-              Generating Icons has never been easier , we use AI to help you
-              created icons without the need for a designer.
+              Generating Digital Assets has never been easier , we use AI to help you
+              created assets without the need for a designer.
             </p>
             <div className="bg-primary-700 hover:bg-primary-800 focus:ring-primary-300 dark:focus:ring-primary-900 mr-3 inline-flex items-center justify-center rounded-lg px-5 py-3 text-center text-base font-medium text-white focus:ring-4">
               <PrimaryLinkButton href={"/generate"} className="self-start">
-                Generate your Icons
+                Generate your Assets
               </PrimaryLinkButton>
               <svg
                 className="-mr-1 ml-2 h-5 w-5"
@@ -54,28 +55,9 @@ function HeroBanner() {
         </div>
       </section>
       <Content></Content>
+      <References></References>
       <Price></Price>
     </>
-
-    // <section className="mb-24 mt-12 grid grid-cols-1 gap-12 px-8 text-4xl sm:grid-cols-2">
-    //   <div className="flex flex-col gap-4">
-    //     <h1 className="text-6xl">Generate Icons with a click of a button</h1>
-    //     <p className="text-2xl">
-    //       Use AI to generate icons instead of paying a designer and waiting for
-    //       them...
-    //     </p>
-    //     <PrimaryLinkButton href={"/generate"} className="self-start">
-    //       Generate your Icons
-    //     </PrimaryLinkButton>
-    //   </div>
-    //   <Image
-    //     className="order-first sm:-order-none"
-    //     src="/banner.png"
-    //     alt="hero image"
-    //     width="300"
-    //     height="300"
-    //   ></Image>
-    // </section>
   );
 }
 
