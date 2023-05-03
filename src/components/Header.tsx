@@ -13,7 +13,7 @@ export function Header() {
 
   return (
     <header>
-      <nav className="border-gray-200 bg-gray-100 px-4 py-2.5 dark:bg-gray-800 lg:px-6">
+      <nav className="border-gray-200  px-4 py-2.5 lg:px-6">
         <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between">
           <div className="flex items-center">
             <Image
@@ -27,41 +27,6 @@ export function Header() {
             </span>
           </div>
           <div className="flex items-center lg:order-2">
-            <ul>
-              {isLoggedIn && (
-                <>
-                  <div className="flex">
-                    <li className="mr-2 rounded-lg px-4 py-2 text-sm font-medium text-gray-800 hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-800 lg:px-5 lg:py-2.5">
-                      <Button variant="credits">
-                        {credits.data} Credits Remainin
-                      </Button>
-                    </li>
-                    <li className="mr-2 rounded-lg px-4 py-2 text-sm font-medium text-gray-800 hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-800 lg:px-5 lg:py-2.5">
-                      <Button
-                        variant="primary"
-                        onClick={() => {
-                          signOut().catch(console.error);
-                        }}
-                      >
-                        Logout
-                      </Button>
-                    </li>
-                  </div>
-                </>
-              )}
-              {!isLoggedIn && (
-                <li className="mr-2 rounded-lg px-4 py-2 text-sm font-medium text-gray-800 hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-800 lg:px-5 lg:py-2.5">
-                  <Button
-                    variant="primary"
-                    onClick={() => {
-                      signIn().catch(console.error);
-                    }}
-                  >
-                    Login
-                  </Button>
-                </li>
-              )}
-            </ul>
             <button
               data-collapse-toggle="mobile-menu-2"
               type="button"
@@ -103,7 +68,7 @@ export function Header() {
             <ul className="mt-4 flex flex-col font-medium lg:mt-0 lg:flex-row lg:space-x-8">
               {isLoggedIn && (
                 <li className="lg:hover:text-primary-700 block border-b border-gray-100 py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white lg:border-0 lg:p-0 lg:hover:bg-transparent lg:dark:hover:bg-transparent lg:dark:hover:text-white">
-                  <PrimaryLink href="/collection">Collection</PrimaryLink>
+                  <PrimaryLink href="/collection">My Icons</PrimaryLink>
                 </li>
               )}
               <li className="lg:hover:text-primary-700 block border-b border-gray-100 py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white lg:border-0 lg:p-0 lg:hover:bg-transparent lg:dark:hover:bg-transparent lg:dark:hover:text-white">
@@ -112,6 +77,36 @@ export function Header() {
               <li className="lg:hover:text-primary-700 block border-b border-gray-100 py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white lg:border-0 lg:p-0 lg:hover:bg-transparent lg:dark:hover:bg-transparent lg:dark:hover:text-white">
                 <PrimaryLink href="/generate">Generate</PrimaryLink>
               </li>
+              {!isLoggedIn && (
+                <li className="lg:hover:text-primary-700 block border-b border-gray-100 py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white lg:border-0 lg:p-0 lg:hover:bg-transparent lg:dark:hover:bg-transparent lg:dark:hover:text-white">
+                  <PrimaryLink
+                    onClick={() => {
+                      signIn().catch(console.error);
+                    }}
+                    href="/generate"
+                  >
+                    Login
+                  </PrimaryLink>
+                </li>
+              )}
+
+              {isLoggedIn && (
+                <>
+                  <li className="lg:hover:text-primary-700 block border-b border-gray-100 py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white lg:border-0 lg:p-0 lg:hover:bg-transparent lg:dark:hover:bg-transparent lg:dark:hover:text-white">
+                    <PrimaryLink
+                      onClick={() => {
+                        signOut().catch(console.error);
+                      }}
+                      href={"/"}
+                    >
+                      Sign Out
+                    </PrimaryLink>
+                  </li>
+                  <li className="lg:hover:text-primary-700 block border-b border-gray-100 py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white lg:border-0 lg:p-0 lg:hover:bg-transparent lg:dark:hover:bg-transparent lg:dark:hover:text-white">
+                    {credits.data} Credits Remaining
+                  </li>
+                </>
+              )}
             </ul>
           </div>
         </div>
