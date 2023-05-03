@@ -16,7 +16,7 @@ export function References() {
           </svg>
           <blockquote>
             <p className="text-2xl font-medium text-gray-900 dark:text-white">
-              "Asset Generator is a great tool for anyone who wants to create
+              "Asset Brain AI is a great tool for anyone who wants to create
               digital assets without the need for a designer. It's easy to use
               and has a lot of features that make it stand out from other tools
               on the market."
