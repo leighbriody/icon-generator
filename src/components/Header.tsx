@@ -1,6 +1,5 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useBuyCredits } from "~/hooks/useBuyCredits";
-import { Button } from "./Button";
 import { PrimaryLink } from "./PrimaryLink";
 import { api } from "~/utils/api";
 import Image from "next/image";

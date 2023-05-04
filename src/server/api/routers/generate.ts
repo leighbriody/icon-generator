@@ -5,7 +5,6 @@ import AWS from "aws-sdk";
 import {
   createTRPCRouter,
   protectedProcedure,
-  publicProcedure,
 } from "~/server/api/trpc";
 
 import { Configuration, OpenAIApi } from "openai";
