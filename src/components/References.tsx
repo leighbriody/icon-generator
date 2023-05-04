@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export function References() {
   return (
     <section className="bg-white dark:bg-gray-900">
@@ -16,18 +18,21 @@ export function References() {
           </svg>
           <blockquote>
             <p className="text-2xl font-medium text-gray-900 dark:text-white">
-              'Asset Brain AI is a great tool for anyone who wants to create
-              digital assets without the need for a designer. It's easy to use
-              and has a lot of features that make it stand out from other tools
-              on the market."
+              &apos;Asset Brain AI is a great tool for anyone who wants to
+              create digital assets without the need for a designer. It&apos;s
+              easy to use and has a lot of features that make it stand out from
+              other tools on the market.&apos;
             </p>
           </blockquote>
+
           <figcaption className="mt-6 flex items-center justify-center space-x-3">
-            <img
+            <Image
               className="h-6 w-6 rounded-full"
               src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/michael-gouch.png"
               alt="profile picture"
-            ></img>
+              width={24}
+              height={24}
+            />
             <div className="flex items-center divide-x-2 divide-gray-500 dark:divide-gray-700">
               <div className="pr-3 font-medium text-gray-900 dark:text-white">
                 Joe Blogs
