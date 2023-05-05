@@ -26,13 +26,13 @@ export function References() {
           </blockquote>
 
           <figcaption className="mt-6 flex items-center justify-center space-x-3">
-            <Image
+            {/* <Image
               className="h-6 w-6 rounded-full"
               src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/michael-gouch.png"
               alt="profile picture"
               width={24}
               height={24}
-            />
+            /> */}
             <div className="flex items-center divide-x-2 divide-gray-500 dark:divide-gray-700">
               <div className="pr-3 font-medium text-gray-900 dark:text-white">
                 Joe Blogs

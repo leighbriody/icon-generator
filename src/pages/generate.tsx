@@ -3,7 +3,7 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import Input from "~/components/Input";
 import FormGroup from "~/components/FormGroup";
-import {useState } from "react";
+import { useState } from "react";
 import { api } from "~/utils/api";
 import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
@@ -12,13 +12,13 @@ import { Button } from "~/components/Button";
 
 const assets = [
   "Logo",
-  "Icons",
-  "Painting",
-  "Wallpaper",
-  "Photographs",
-  "Vector Graphics",
+  "Icon",
+  // "Painting",
+  // "Wallpaper",
+  // "Photographs",
+  "Vector Graphic",
   "Iphone App Icon",
-  "Patterns",
+  // "Patterns",
 ];
 
 const colors = [
@@ -51,7 +51,7 @@ const backgroundColors = [
   "black",
   "white",
   "rainbow",
-  "transparent",
+  // "transparent",
   "blue",
 ];
 
@@ -74,7 +74,7 @@ const styles = [
   "retro",
   "cartoonish",
   "futuristic",
-  "water color",
+  // "water color",
 ];
 
 const GeneratePage: NextPage = () => {
@@ -153,7 +153,7 @@ const GeneratePage: NextPage = () => {
           <h2 className="text-xl">2. Pick your asset type.</h2>
           <FormGroup className="mb-12 grid grid-cols-2 sm:grid-cols-4">
             {assets.map((asset) => (
-              <label key={asset} className={clsx("flex gap-2 text-2xl", asset)}>
+              <label key={asset} className={clsx("flex flex-col gap-2")}>
                 <input
                   required
                   type="radio"
@@ -161,18 +161,34 @@ const GeneratePage: NextPage = () => {
                   value={asset}
                   checked={asset === form.asset}
                   onChange={() => setForm((prev) => ({ ...prev, asset }))}
-                ></input>
-                {asset}
+                  className="hidden"
+                />
+                <div>
+                  <div className="relative">
+                    <Image
+                      className={clsx(
+                        "h-auto max-w-full cursor-pointer rounded-xl align-middle shadow-lg",
+                        { "opacity-50": asset !== form.asset }
+                      )}
+                      src={"/monkey.png"}
+                      alt={""}
+                      width={500}
+                      height={500}
+                    />
+                    {asset !== form.asset && (
+                      <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-xl font-bold text-white">
+                        {asset}
+                      </span>
+                    )}
+                  </div>
+                </div>
               </label>
             ))}
           </FormGroup>
           <h2 className="text-xl">2. Pick your background color type.</h2>
           <FormGroup className="mb-12 grid grid-cols-2 sm:grid-cols-4">
             {backgroundColors.map((background) => (
-              <label
-                key={background}
-                className={clsx("flex gap-2 text-2xl", background)}
-              >
+              <label key={background} className={clsx("flex flex-col gap-2")}>
                 <input
                   required
                   type="radio"
@@ -180,15 +196,34 @@ const GeneratePage: NextPage = () => {
                   value={background}
                   checked={background === form.background}
                   onChange={() => setForm((prev) => ({ ...prev, background }))}
-                ></input>
-                {background}
+                  className="hidden"
+                />
+                <div>
+                  <div className="relative">
+                    <Image
+                      className={clsx(
+                        "h-auto max-w-full cursor-pointer rounded-xl align-middle shadow-lg",
+                        { "opacity-50": background !== form.background }
+                      )}
+                      src={"/monkey.png"}
+                      alt={""}
+                      width={500}
+                      height={500}
+                    />
+                    {background !== form.background && (
+                      <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-xl font-bold text-white">
+                        {background}
+                      </span>
+                    )}
+                  </div>
+                </div>
               </label>
             ))}
           </FormGroup>
           <h2 className="text-xl">2. Pick your icon color.</h2>
           <FormGroup className="mb-12 grid grid-cols-2 sm:grid-cols-4">
             {colors.map((color) => (
-              <label key={color} className={clsx("flex gap-2 text-2xl", color)}>
+              <label key={color} className={clsx("flex flex-col gap-2")}>
                 <input
                   required
                   type="radio"
@@ -196,8 +231,27 @@ const GeneratePage: NextPage = () => {
                   value={color}
                   checked={color === form.color}
                   onChange={() => setForm((prev) => ({ ...prev, color }))}
-                ></input>
-                {color}
+                  className="hidden"
+                />
+                <div>
+                  <div className="relative">
+                    <Image
+                      className={clsx(
+                        "h-auto max-w-full cursor-pointer rounded-xl align-middle shadow-lg",
+                        { "opacity-50": color !== form.color }
+                      )}
+                      src={"/monkey.png"}
+                      alt={""}
+                      width={500}
+                      height={500}
+                    />
+                    {color !== form.color && (
+                      <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-xl font-bold text-white">
+                        {color}
+                      </span>
+                    )}
+                  </div>
+                </div>
               </label>
             ))}
           </FormGroup>
@@ -205,7 +259,7 @@ const GeneratePage: NextPage = () => {
           <h2 className="text-xl">3. Pick your icon shape.</h2>
           <FormGroup className="mb-12 grid grid-cols-2 sm:grid-cols-4">
             {shapes.map((shape) => (
-              <label key={shape} className={clsx("flex gap-2 text-2xl", shape)}>
+              <label key={shape} className={clsx("flex flex-col gap-2")}>
                 <input
                   required
                   type="radio"
@@ -213,8 +267,27 @@ const GeneratePage: NextPage = () => {
                   value={shape}
                   checked={shape === form.shape}
                   onChange={() => setForm((prev) => ({ ...prev, shape }))}
-                ></input>
-                {shape}
+                  className="hidden"
+                />
+                <div>
+                  <div className="relative">
+                    <Image
+                      className={clsx(
+                        "h-auto max-w-full cursor-pointer rounded-xl align-middle shadow-lg",
+                        { "opacity-50": shape !== form.shape }
+                      )}
+                      src={"/monkey.png"}
+                      alt={""}
+                      width={500}
+                      height={500}
+                    />
+                    {shape !== form.shape && (
+                      <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-xl font-bold text-white">
+                        {shape}
+                      </span>
+                    )}
+                  </div>
+                </div>
               </label>
             ))}
           </FormGroup>
@@ -222,7 +295,7 @@ const GeneratePage: NextPage = () => {
           <h2 className="text-xl">4. Pick your icon style.</h2>
           <FormGroup className="mb-12 grid grid-cols-2 sm:grid-cols-4">
             {styles.map((style) => (
-              <label key={style} className={clsx("flex gap-2 text-2xl", style)}>
+              <label key={style} className={clsx("flex flex-col gap-2")}>
                 <input
                   required
                   type="radio"
@@ -230,8 +303,27 @@ const GeneratePage: NextPage = () => {
                   value={style}
                   checked={style === form.style}
                   onChange={() => setForm((prev) => ({ ...prev, style }))}
-                ></input>
-                {style}
+                  className="hidden"
+                />
+                <div>
+                  <div className="relative">
+                    <Image
+                      className={clsx(
+                        "h-auto max-w-full cursor-pointer rounded-xl align-middle shadow-lg",
+                        { "opacity-50": style !== form.style }
+                      )}
+                      src={"/monkey.png"}
+                      alt={""}
+                      width={500}
+                      height={500}
+                    />
+                    {style !== form.style && (
+                      <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-xl font-bold text-white">
+                        {style}
+                      </span>
+                    )}
+                  </div>
+                </div>
               </label>
             ))}
           </FormGroup>
@@ -263,16 +355,15 @@ const GeneratePage: NextPage = () => {
           )}
 
           {!isLoggedIn && (
-             <Button
-             variant="secondary"
-             onClick={() => {
-               signIn().catch(console.error);
-             }}
-           >
-             Login to Generate
-           </Button>
+            <Button
+              variant="secondary"
+              onClick={() => {
+                signIn().catch(console.error);
+              }}
+            >
+              Login to Generate
+            </Button>
           )}
-
         </form>
 
         {imagesUrl.length > 0 && (
