@@ -164,7 +164,7 @@ const GeneratePage: NextPage = () => {
                         { "opacity-50": asset !== form.asset }
                       )}
                       src={
-                        "/" + asset.toLowerCase().replace(/\s/g, "") + ".png"
+                        "/styles/" + asset.toLowerCase().replace(/\s/g, "") + ".png"
                       }
                       alt={""}
                       width={500}
