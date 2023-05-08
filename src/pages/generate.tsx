@@ -14,12 +14,13 @@ import GenerateHeader from "~/components/GenerateHeader";
 const assets = [
   "Logo",
   "Icon",
+  "Iphone App Icon",
+  "Photograph",
   // "Painting",
   // "Wallpaper",
-  // "Photographs",
-  "Vector Graphic",
-  "Iphone App Icon",
-  // "Patterns",
+  "Vector",
+  "Digital Art",
+  "Letters",
 ];
 
 const colors = [
@@ -30,30 +31,20 @@ const colors = [
   "pink",
   "black",
   "white",
-  "rainbow",
+  "any",
 ];
 
-const shapes = [
-  "circle",
-  "square",
-  "rounded",
-  "star",
-  "heart",
-  "diamond",
-  "hexagon",
-  "octagon",
-];
+const shapes = ["circle", "square", "rounded"];
 
 const backgroundColors = [
   "dark",
   "light",
   "gradient",
-  "white",
   "black",
   "white",
   "rainbow",
-  // "transparent",
   "blue",
+  "any",
 ];
 
 // const styles = [
@@ -72,9 +63,9 @@ const styles = [
   "3d rendered",
   "pixelated",
   "realistic",
-  "retro",
+  "sticker",
   "cartoonish",
-  "futuristic",
+  "hand drawn",
   // "water color",
 ];
 
@@ -172,7 +163,9 @@ const GeneratePage: NextPage = () => {
                         "h-auto max-w-full cursor-pointer rounded-xl align-middle shadow-lg",
                         { "opacity-50": asset !== form.asset }
                       )}
-                      src={"/monkey.png"}
+                      src={
+                        "/" + asset.toLowerCase().replace(/\s/g, "") + ".png"
+                      }
                       alt={""}
                       width={500}
                       height={500}
@@ -207,7 +200,11 @@ const GeneratePage: NextPage = () => {
                         "h-auto max-w-full cursor-pointer rounded-xl align-middle shadow-lg",
                         { "opacity-50": background !== form.background }
                       )}
-                      src={"/monkey.png"}
+                      src={
+                        "/styles/" +
+                        background.toLowerCase().replace(/\s/g, "") +
+                        "background.png"
+                      }
                       alt={""}
                       width={500}
                       height={500}
@@ -242,7 +239,11 @@ const GeneratePage: NextPage = () => {
                         "h-auto max-w-full cursor-pointer rounded-xl align-middle shadow-lg",
                         { "opacity-50": color !== form.color }
                       )}
-                      src={"/monkey.png"}
+                      src={
+                        "/styles/" +
+                        color.toLowerCase().replace(/\s/g, "") +
+                        "foreground.png"
+                      }
                       alt={""}
                       width={500}
                       height={500}
@@ -278,7 +279,11 @@ const GeneratePage: NextPage = () => {
                         "h-auto max-w-full cursor-pointer rounded-xl align-middle shadow-lg",
                         { "opacity-50": shape !== form.shape }
                       )}
-                      src={"/monkey.png"}
+                      src={
+                        "/styles/" +
+                        shape.toLowerCase().replace(/\s/g, "") +
+                        ".png"
+                      }
                       alt={""}
                       width={500}
                       height={500}
@@ -314,7 +319,11 @@ const GeneratePage: NextPage = () => {
                         "h-auto max-w-full cursor-pointer rounded-xl align-middle shadow-lg",
                         { "opacity-50": style !== form.style }
                       )}
-                      src={"/monkey.png"}
+                      src={
+                        "/styles/" +
+                        style.toLowerCase().replace(/\s/g, "") +
+                        ".png"
+                      }
                       alt={""}
                       width={500}
                       height={500}
