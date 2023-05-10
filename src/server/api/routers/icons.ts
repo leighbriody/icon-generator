@@ -20,6 +20,9 @@ export const iconsRouter = createTRPCRouter({
   getCommunityIcons: publicProcedure.query(async ({ ctx }) => {
     //get 50 random icons
     const icons = await ctx.prisma.icon.findMany({
+      where: {
+        share: "Yes" || "yes"|| true ,
+      },
       take: 50,
       orderBy: {
         createdAt: "desc",

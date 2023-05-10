@@ -2,10 +2,7 @@ import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import AWS from "aws-sdk";
 
-import {
-  createTRPCRouter,
-  protectedProcedure,
-} from "~/server/api/trpc";
+import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 import { Configuration, OpenAIApi } from "openai";
 import { env } from "~/env.mjs";
@@ -56,10 +53,10 @@ export const generateRouter = createTRPCRouter({
         style: z.string(),
         asset: z.string(),
         background: z.string(),
+        share: z.string(),
       })
     )
     .mutation(async ({ ctx, input }) => {
-      //TODO verify user has enough credits
       const { count } = await ctx.prisma.user.updateMany({
         where: {
           id: ctx.session.user.id,
@@ -83,8 +80,6 @@ export const generateRouter = createTRPCRouter({
 
       //TODO - Make fetch to dalle api
       const finalPrompt = `a modern ${input.shape}  ${input.asset} in ${input.color} of a ${input.prompt} in the style of ${input.style} with a background color of ${input.background} minimalisttic , high quality , trending on art station , unreal engine graphics quality `;
-      console.log("******");
-      console.log("final prompt", finalPrompt);
       const base64EncodedImages = await generateIcon(
         finalPrompt,
         input.numberOfIcons
@@ -97,6 +92,14 @@ export const generateRouter = createTRPCRouter({
             data: {
               prompt: input.prompt,
               userId: ctx.session.user.id,
+              promptOptions: [
+                input.asset,
+                input.style,
+                input.color,
+                input.shape,
+                input.background + " background",
+              ],
+              share: input.share,
             },
           });
           await s3

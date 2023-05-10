@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { type NextPage } from "next";
 import Head from "next/head";
-import Input from "~/components/Input";
 import FormGroup from "~/components/FormGroup";
 import { useState } from "react";
 import { api } from "~/utils/api";
@@ -10,6 +9,7 @@ import Image from "next/image";
 import clsx from "clsx";
 import { Button } from "~/components/Button";
 import GenerateHeader from "~/components/GenerateHeader";
+import { SkeletonLoadingImage } from "~/components/SkeletonLoadingImage";
 
 const assets = [
   "Logo",
@@ -22,7 +22,7 @@ const assets = [
   "Digital Art",
   "Letters",
 ];
-
+const share = ["Yes", "No"];
 const colors = [
   "blue",
   "red",
@@ -78,6 +78,7 @@ const GeneratePage: NextPage = () => {
     style: "",
     asset: "",
     background: "",
+    share: "",
   });
 
   const [error, setError] = useState("");
@@ -102,13 +103,14 @@ const GeneratePage: NextPage = () => {
   }
 
   function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
-    //prevent default prevents the page from reloading
     e.preventDefault();
-    //TODO - add logic to handle form submission
     generateIcon.mutate({
       ...form,
       numberOfIcons: parseInt(form.numberOfIcons),
     });
+
+    //scroll to the bottom of the page
+    window.scrollTo(0, document.body.scrollHeight);
   }
 
   const session = useSession();
@@ -124,19 +126,19 @@ const GeneratePage: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <GenerateHeader></GenerateHeader>
-      <main className="container mx-auto mt-0 flex min-h-screen flex-col gap-4 px-8">
+      <main className="container mx-auto mb-8 mt-0 flex min-h-screen flex-col gap-4 px-8">
         <form className="flex flex-col gap-4" onSubmit={handleFormSubmit}>
           <h2 className="mb-4 text-2xl font-bold">
             1. Describe what you want the asset to look like
           </h2>
           <div className="flex flex-col gap-2">
-            <label className="text-lg font-semibold" htmlFor="prompt">
+            <label htmlFor="prompt" className="text-lg font-semibold">
               Prompt
             </label>
             <input
               id="prompt"
               type="text"
-              className="rounded-md border border-gray-300 p-2 text-black focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="rounded-md border border-gray-300 p-3 text-black focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="E.g., A happy dog with a top hat..."
               required
               value={form.prompt}
@@ -285,28 +287,59 @@ const GeneratePage: NextPage = () => {
               </label>
             ))}
           </div>
+          <h2 className="mb-4 text-2xl font-bold">
+            Do you want to share this with the community ?
+          </h2>
+          <div className="grid grid-cols-2 gap-4">
+            {share.map((share) => (
+              <label key={share} className="flex flex-col items-center gap-2">
+                <input
+                  type="radio"
+                  name="share"
+                  value={share}
+                  checked={share === form.share}
+                  onChange={() => setForm((prev) => ({ ...prev, share }))}
+                  className="hidden"
+                />
+                <div className="h-32 w-32 rounded-full border border-gray-300">
+                  <img
+                    src={`/styles/${share
+                      .toLowerCase()
+                      .replace(/\s/g, "")}.png`}
+                    alt=""
+                    className={clsx("h-full w-full rounded-full", {
+                      "opacity-50": share !== form.share,
+                    })}
+                  />
+                </div>
+                <span>{share}</span>
+              </label>
+            ))}
+          </div>
           <h2 className="text-xl">7. How many do you want?</h2>
           <FormGroup>
             <label className="mb-4 sm:col-span-3 sm:mb-0"></label>
-            <Input
+            <input
+              type="text"
               required
               inputMode="numeric"
               pattern="[1-9]|10"
               value={form.numberOfIcons}
               onChange={updateForm("numberOfIcons")}
-              className="w-full md:w-1/2"
-            ></Input>
+              className="rounded-md border border-gray-300 p-2 text-black focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
           </FormGroup>
 
           {error && <p className="text-red-500">{error}</p>}
 
           {isLoggedIn && (
-            <Button
-              isLoading={generateIcon.isLoading}
-              className="rounde py- px-4"
+            <button
+              type="submit"
+              disabled={generateIcon.isLoading}
+              className="rounded-md bg-blue-500 px-4 py-2 font-semibold text-white transition-colors duration-200 hover:bg-blue-600"
             >
-              Submit
-            </Button>
+              {generateIcon.isLoading ? "Loading..." : "Submit"}
+            </button>
           )}
 
           {!isLoggedIn && (
@@ -321,6 +354,9 @@ const GeneratePage: NextPage = () => {
           )}
         </form>
 
+        {generateIcon.isLoading && (
+          <SkeletonLoadingImage></SkeletonLoadingImage>
+        )}
         {imagesUrl.length > 0 && (
           <>
             <h2 className="text-xl">Your Assets</h2>
