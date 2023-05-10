@@ -14,8 +14,8 @@ import GenerateHeader from "~/components/GenerateHeader";
 const assets = [
   "Logo",
   "Icon",
-  "Iphone App Icon",
-  "Photograph",
+  "App Icon",
+  "Photo",
   // "Painting",
   // "Wallpaper",
   "Vector",
@@ -125,30 +125,30 @@ const GeneratePage: NextPage = () => {
       </Head>
       <GenerateHeader></GenerateHeader>
       <main className="container mx-auto mt-0 flex min-h-screen flex-col gap-4 px-8">
-        {/* <h1 className="text-5xl">Generate AI Icons</h1>
-        <p className="mb-12 text-2xl">
-          Fill out the form blow to start generating your icons
-        </p> */}
         <form className="flex flex-col gap-4" onSubmit={handleFormSubmit}>
-          <h2 className="text-xl">
-            1. Desribe what you want icon to look like
+          <h2 className="mb-4 text-2xl font-bold">
+            1. Describe what you want the asset to look like
           </h2>
-          <FormGroup>
-            <label>Propmt</label>
-            <Input
-              placeholder="A happy dog with a top hat . . "
+          <div className="flex flex-col gap-2">
+            <label className="text-lg font-semibold" htmlFor="prompt">
+              Prompt
+            </label>
+            <input
+              id="prompt"
+              type="text"
+              className="rounded-md border border-gray-300 p-2 text-black focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="E.g., A happy dog with a top hat..."
               required
               value={form.prompt}
               onChange={updateForm("prompt")}
-              className="w-full md:w-1/2"
-            ></Input>
-          </FormGroup>
-          <h2 className="text-xl">2. Pick your asset type.</h2>
-          <FormGroup className="mb-12 grid grid-cols-2 sm:grid-cols-4">
+            />
+          </div>
+
+          <h2 className="mb-4 text-2xl font-bold">2. Pick your asset type.</h2>
+          <div className="grid grid-cols-2 gap-4">
             {assets.map((asset) => (
-              <label key={asset} className={clsx("flex flex-col gap-2")}>
+              <label key={asset} className="flex flex-col items-center gap-2">
                 <input
-                  required
                   type="radio"
                   name="asset"
                   value={asset}
@@ -156,75 +156,26 @@ const GeneratePage: NextPage = () => {
                   onChange={() => setForm((prev) => ({ ...prev, asset }))}
                   className="hidden"
                 />
-                <div>
-                  <div className="relative">
-                    <Image
-                      className={clsx(
-                        "h-auto max-w-full cursor-pointer rounded-xl align-middle shadow-lg",
-                        { "opacity-50": asset !== form.asset }
-                      )}
-                      src={
-                        "/styles/" + asset.toLowerCase().replace(/\s/g, "") + ".png"
-                      }
-                      alt={""}
-                      width={500}
-                      height={500}
-                    />
-                    {asset !== form.asset && (
-                      <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-xl font-bold text-white">
-                        {asset}
-                      </span>
-                    )}
-                  </div>
+                <div className="h-32 w-32 rounded-full border border-gray-300">
+                  <img
+                    src={`/styles/${asset
+                      .toLowerCase()
+                      .replace(/\s/g, "")}.png`}
+                    alt=""
+                    className={clsx("h-full w-full rounded-full", {
+                      "opacity-50": asset !== form.asset,
+                    })}
+                  />
                 </div>
+                <span>{asset}</span>
               </label>
             ))}
-          </FormGroup>
-          <h2 className="text-xl">2. Pick your background color type.</h2>
-          <FormGroup className="mb-12 grid grid-cols-2 sm:grid-cols-4">
-            {backgroundColors.map((background) => (
-              <label key={background} className={clsx("flex flex-col gap-2")}>
-                <input
-                  required
-                  type="radio"
-                  name="background"
-                  value={background}
-                  checked={background === form.background}
-                  onChange={() => setForm((prev) => ({ ...prev, background }))}
-                  className="hidden"
-                />
-                <div>
-                  <div className="relative">
-                    <Image
-                      className={clsx(
-                        "h-auto max-w-full cursor-pointer rounded-xl align-middle shadow-lg",
-                        { "opacity-50": background !== form.background }
-                      )}
-                      src={
-                        "/styles/" +
-                        background.toLowerCase().replace(/\s/g, "") +
-                        "background.png"
-                      }
-                      alt={""}
-                      width={500}
-                      height={500}
-                    />
-                    {background !== form.background && (
-                      <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-xl font-bold text-white">
-                        {background}
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </label>
-            ))}
-          </FormGroup>
-          <h2 className="text-xl">2. Pick your icon color.</h2>
-          <FormGroup className="mb-12 grid grid-cols-2 sm:grid-cols-4">
+          </div>
+          <h2 className="mb-4 text-2xl font-bold">3. Pick your asset color.</h2>
+          <div className="grid grid-cols-2 gap-4">
             {colors.map((color) => (
-              <label key={color} className={clsx("flex flex-col gap-2")}>
+              <label key={color} className="flex flex-col items-center gap-2">
                 <input
-                  required
                   type="radio"
                   name="color"
                   value={color}
@@ -232,39 +183,58 @@ const GeneratePage: NextPage = () => {
                   onChange={() => setForm((prev) => ({ ...prev, color }))}
                   className="hidden"
                 />
-                <div>
-                  <div className="relative">
-                    <Image
-                      className={clsx(
-                        "h-auto max-w-full cursor-pointer rounded-xl align-middle shadow-lg",
-                        { "opacity-50": color !== form.color }
-                      )}
-                      src={
-                        "/styles/" +
-                        color.toLowerCase().replace(/\s/g, "") +
-                        "foreground.png"
-                      }
-                      alt={""}
-                      width={500}
-                      height={500}
-                    />
-                    {color !== form.color && (
-                      <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-xl font-bold text-white">
-                        {color}
-                      </span>
-                    )}
-                  </div>
+                <div className="h-32 w-32 rounded-full border border-gray-300">
+                  <img
+                    src={`/styles/${color
+                      .toLowerCase()
+                      .replace(/\s/g, "")}foreground.png`}
+                    alt=""
+                    className={clsx("h-full w-full rounded-full", {
+                      "opacity-50": color !== form.color,
+                    })}
+                  />
                 </div>
+                <span>{color}</span>
               </label>
             ))}
-          </FormGroup>
-
-          <h2 className="text-xl">3. Pick your icon shape.</h2>
-          <FormGroup className="mb-12 grid grid-cols-2 sm:grid-cols-4">
-            {shapes.map((shape) => (
-              <label key={shape} className={clsx("flex flex-col gap-2")}>
+          </div>
+          <h2 className="mb-4 text-2xl font-bold">
+            4. Pick your asset background color.
+          </h2>
+          <div className="grid grid-cols-2 gap-4">
+            {backgroundColors.map((background) => (
+              <label
+                key={background}
+                className="flex flex-col items-center gap-2"
+              >
                 <input
-                  required
+                  type="radio"
+                  name="background"
+                  value={background}
+                  checked={background === form.background}
+                  onChange={() => setForm((prev) => ({ ...prev, background }))}
+                  className="hidden"
+                />
+                <div className="h-32 w-32 rounded-full border border-gray-300">
+                  <img
+                    src={`/styles/${background
+                      .toLowerCase()
+                      .replace(/\s/g, "")}background.png`}
+                    alt=""
+                    className={clsx("h-full w-full rounded-full", {
+                      "opacity-50": background !== form.background,
+                    })}
+                  />
+                </div>
+                <span>{background}</span>
+              </label>
+            ))}
+          </div>
+          <h2 className="mb-4 text-2xl font-bold">5. Pick your asset shape.</h2>
+          <div className="grid grid-cols-2 gap-4">
+            {shapes.map((shape) => (
+              <label key={shape} className="flex flex-col items-center gap-2">
+                <input
                   type="radio"
                   name="shape"
                   value={shape}
@@ -272,39 +242,27 @@ const GeneratePage: NextPage = () => {
                   onChange={() => setForm((prev) => ({ ...prev, shape }))}
                   className="hidden"
                 />
-                <div>
-                  <div className="relative">
-                    <Image
-                      className={clsx(
-                        "h-auto max-w-full cursor-pointer rounded-xl align-middle shadow-lg",
-                        { "opacity-50": shape !== form.shape }
-                      )}
-                      src={
-                        "/styles/" +
-                        shape.toLowerCase().replace(/\s/g, "") +
-                        ".png"
-                      }
-                      alt={""}
-                      width={500}
-                      height={500}
-                    />
-                    {shape !== form.shape && (
-                      <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-xl font-bold text-white">
-                        {shape}
-                      </span>
-                    )}
-                  </div>
+                <div className="h-32 w-32 rounded-full border border-gray-300">
+                  <img
+                    src={`/styles/${shape
+                      .toLowerCase()
+                      .replace(/\s/g, "")}.png`}
+                    alt=""
+                    className={clsx("h-full w-full rounded-full", {
+                      "opacity-50": shape !== form.shape,
+                    })}
+                  />
                 </div>
+                <span>{shape}</span>
               </label>
             ))}
-          </FormGroup>
+          </div>
 
-          <h2 className="text-xl">4. Pick your icon style.</h2>
-          <FormGroup className="mb-12 grid grid-cols-2 sm:grid-cols-4">
+          <h2 className="mb-4 text-2xl font-bold">6. Pick your asset style.</h2>
+          <div className="grid grid-cols-2 gap-4">
             {styles.map((style) => (
-              <label key={style} className={clsx("flex flex-col gap-2")}>
+              <label key={style} className="flex flex-col items-center gap-2">
                 <input
-                  required
                   type="radio"
                   name="style"
                   value={style}
@@ -312,38 +270,24 @@ const GeneratePage: NextPage = () => {
                   onChange={() => setForm((prev) => ({ ...prev, style }))}
                   className="hidden"
                 />
-                <div>
-                  <div className="relative">
-                    <Image
-                      className={clsx(
-                        "h-auto max-w-full cursor-pointer rounded-xl align-middle shadow-lg",
-                        { "opacity-50": style !== form.style }
-                      )}
-                      src={
-                        "/styles/" +
-                        style.toLowerCase().replace(/\s/g, "") +
-                        ".png"
-                      }
-                      alt={""}
-                      width={500}
-                      height={500}
-                    />
-                    {style !== form.style && (
-                      <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-xl font-bold text-white">
-                        {style}
-                      </span>
-                    )}
-                  </div>
+                <div className="h-32 w-32 rounded-full border border-gray-300">
+                  <img
+                    src={`/styles/${style
+                      .toLowerCase()
+                      .replace(/\s/g, "")}.png`}
+                    alt=""
+                    className={clsx("h-full w-full rounded-full", {
+                      "opacity-50": style !== form.style,
+                    })}
+                  />
                 </div>
+                <span>{style}</span>
               </label>
             ))}
-          </FormGroup>
-
-          <h2 className="text-xl">4. How many do you want.</h2>
+          </div>
+          <h2 className="text-xl">7. How many do you want?</h2>
           <FormGroup>
-            <label className="mb-4 sm:col-span-3 sm:mb-0">
-              How many icons do you want?
-            </label>
+            <label className="mb-4 sm:col-span-3 sm:mb-0"></label>
             <Input
               required
               inputMode="numeric"
