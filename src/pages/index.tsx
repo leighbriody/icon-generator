@@ -16,7 +16,7 @@ function HeroBanner() {
               className="block text-red-600 xl:inline"
               data-primary="indigo-600"
             >
-              Please Note : Currently Under Development , you must have got an early look ;)
+              Please Note : Currently Under Development , you must have got an early look 
             </span>
             <h1 className="mb-4 max-w-2xl text-4xl font-extrabold leading-none tracking-tight dark:text-white md:text-5xl xl:text-6xl">
               Generate Digital Assets Using{" "}
