@@ -8,9 +8,9 @@ import { CommunityHero } from "~/components/CommunityHero";
 const CollectionPage: NextPage = () => {
   const icons = api.icons.getCommunityIcons.useQuery();
 
-  function makeVariation(){
-    console.log("makeVariation")
-  }
+  // function makeVariation(){
+  //   console.log("makeVariation")
+  // }
 
   return (
     <>
@@ -47,7 +47,7 @@ const CollectionPage: NextPage = () => {
                 <button
                   className="mt-4 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
                   // eslint-disable-next-line @typescript-eslint/no-misused-promises
-                  onClick={makeVariation()}
+                  // onClick={makeVariation()}
                 >
                   Make Variation
                 </button>
