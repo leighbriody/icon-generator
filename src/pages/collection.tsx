@@ -3,9 +3,15 @@ import Head from "next/head";
 import { api } from "~/utils/api";
 import Image from "next/image";
 import { FaLock, FaUnlock } from "react-icons/fa";
+import { type Icon } from "@prisma/client";
+import { useState } from "react";
 
 const CollectionPage: NextPage = () => {
   const icons = api.icons.getIcons.useQuery();
+
+  const [isDownloadingAsset, setIsDownloadingAsset] = useState<Icon | null>(
+    null
+  );
 
   const makePrivate = api.icons.makeAssetPrivate.useMutation({
     onSuccess(data) {
@@ -29,8 +35,28 @@ const CollectionPage: NextPage = () => {
     },
   });
 
-  function downloadAsset() {
-    console.log("download asset");
+  async function downloadAsset(icon: Icon) {
+    setIsDownloadingAsset(icon);
+    const assetSource = `https://leighs-icon-generator.s3.amazonaws.com/${icon.id}`;
+
+    // Fetch the image data
+    await fetch(assetSource)
+      .then((response) => response.blob())
+      .then((blob) => {
+        // Create a temporary download link
+        const downloadLink = document.createElement("a");
+        const url = URL.createObjectURL(blob);
+        downloadLink.href = url;
+        downloadLink.download = `icon_${icon.id}.png`; // Specify the filename for the downloaded asset
+
+        // Trigger the download
+        downloadLink.click();
+
+        // Clean up the temporary URL object
+        URL.revokeObjectURL(url);
+      })
+      .catch((error) => console.error("Error downloading asset:", error));
+    setIsDownloadingAsset(null);
   }
 
   function makeAssetPrivate(iconId: string) {
@@ -39,7 +65,6 @@ const CollectionPage: NextPage = () => {
 
   function makeAssetPublic(iconId: string) {
     MakePublic.mutate({ iconId: iconId });
-
   }
 
   return (
@@ -95,7 +120,10 @@ const CollectionPage: NextPage = () => {
 
                   <button
                     className="inline-flex items-center rounded bg-gray-300 px-4 py-2 font-bold text-gray-800 hover:bg-gray-400"
-                    onClick={downloadAsset()}
+                    onClick={() => {
+                      void downloadAsset(icon);
+                    }}
+                    
                   >
                     <svg
                       className="mr-2 h-4 w-4 fill-current"
@@ -105,6 +133,28 @@ const CollectionPage: NextPage = () => {
                       <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
                     </svg>
                     <span>Download</span>
+                    {isDownloadingAsset == icon && (
+                      <svg
+                        className="-mr-1 ml-3 h-5 w-5 animate-spin text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12z"
+                        ></path>
+                      </svg>
+                    )}
                   </button>
                 </div>
               </div>
