@@ -60,13 +60,13 @@ model User {
 }
 
 model Icon {
-    id        String   @id @default(cuid())
-    prompt    String?
+    id            String   @id @default(cuid())
+    prompt        String?
     promptOptions String[]
-    User      User?    @relation(fields: [userId], references: [id])
-    userId    String?
-    share     String  @default("Yes")
-    createdAt DateTime @default(now())
+    User          User?    @relation(fields: [userId], references: [id])
+    userId        String?
+    isPublic      Boolean  @default(true)
+    createdAt     DateTime @default(now())
 }
 
 model VerificationToken {

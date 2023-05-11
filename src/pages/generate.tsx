@@ -22,7 +22,7 @@ const assets = [
   "Digital Art",
   "Letters",
 ];
-const share = ["Yes", "No"];
+const publicOptions = [true, false];
 const colors = [
   "blue",
   "red",
@@ -78,7 +78,7 @@ const GeneratePage: NextPage = () => {
     style: "",
     asset: "",
     background: "",
-    share: "",
+    isPublic: true,
   });
 
   const [error, setError] = useState("");
@@ -291,28 +291,28 @@ const GeneratePage: NextPage = () => {
             Do you want to share this with the community ?
           </h2>
           <div className="grid grid-cols-2 gap-4">
-            {share.map((share) => (
-              <label key={share} className="flex flex-col items-center gap-2">
+            {publicOptions.map((isPublic) => (
+              <label key={isPublic? "yes":"no"} className="flex flex-col items-center gap-2">
                 <input
                   type="radio"
-                  name="share"
-                  value={share}
-                  checked={share === form.share}
-                  onChange={() => setForm((prev) => ({ ...prev, share }))}
+                  name="isPublic"
+                  value={isPublic? "yes":"no"}
+                  checked={isPublic === form.isPublic}
+                  onChange={() => setForm((prev) => ({ ...prev, isPublic }))}
                   className="hidden"
                 />
                 <div className="h-32 w-32 rounded-full border border-gray-300">
                   <img
-                    src={`/styles/${share
+                    src={`/styles/${isPublic? "yes":"no"
                       .toLowerCase()
                       .replace(/\s/g, "")}.png`}
                     alt=""
                     className={clsx("h-full w-full rounded-full", {
-                      "opacity-50": share !== form.share,
+                      "opacity-50": isPublic !== form.isPublic,
                     })}
                   />
                 </div>
-                <span>{share}</span>
+                <span>{isPublic? "Yes":"No"}</span>
               </label>
             ))}
           </div>

@@ -53,7 +53,7 @@ export const generateRouter = createTRPCRouter({
         style: z.string(),
         asset: z.string(),
         background: z.string(),
-        share: z.string(),
+        isPublic: z.boolean(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -99,7 +99,7 @@ export const generateRouter = createTRPCRouter({
                 input.shape,
                 input.background + " background",
               ],
-              share: input.share,
+              isPublic: input.isPublic,
             },
           });
           await s3

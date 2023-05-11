@@ -2,21 +2,44 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import { api } from "~/utils/api";
 import Image from "next/image";
-import { type Icon } from "@prisma/client";
+import { FaLock, FaUnlock } from "react-icons/fa";
 
 const CollectionPage: NextPage = () => {
   const icons = api.icons.getIcons.useQuery();
+
+  const makePrivate = api.icons.makeAssetPrivate.useMutation({
+    onSuccess(data) {
+      console.log("make asset private success", data);
+      //reload the icons
+      void icons.refetch();
+    },
+    onError(error) {
+      console.log("make asset private error", error);
+    },
+  });
+
+  const MakePublic = api.icons.makeAssetPublic.useMutation({
+    onSuccess(data) {
+      console.log("make asset public success", data);
+      //reload the icons
+      void icons.refetch();
+    },
+    onError(error) {
+      console.log("make asset public error", error);
+    },
+  });
 
   function downloadAsset() {
     console.log("download asset");
   }
 
-  function makeAssetPrivate() {
-    console.log("make asset private");
+  function makeAssetPrivate(iconId: string) {
+    makePrivate.mutate({ iconId: iconId });
   }
 
-  function makeAssetPublic() {
-    console.log("make asset public");
+  function makeAssetPublic(iconId: string) {
+    MakePublic.mutate({ iconId: iconId });
+
   }
 
   return (
@@ -52,17 +75,24 @@ const CollectionPage: NextPage = () => {
                 </div>
                 {/* 2 buttons here side by side */}
                 <div className="mt-4 flex">
-                  {icon.share == "Yes" && (
-                    <button className="mr-2 rounded bg-blue-500 px-4 py-2 text-white" onClick={makeAssetPrivate()}>
-                      Make Private
+                  {icon.isPublic && (
+                    <button
+                      className="mr-2 inline-flex items-center rounded bg-blue-500 px-4 py-2 text-white"
+                      onClick={() => makeAssetPrivate(icon.id)}
+                    >
+                      <FaLock className="mr-2" /> Make Private
                     </button>
                   )}
 
-                  {icon.share != "Yes" && (
-                    <button className="mr-2 rounded bg-blue-500 px-4 py-2 text-white" onClick={makeAssetPublic()}>
-                      Share Publicly
+                  {!icon.isPublic && (
+                    <button
+                      className="mr-2 inline-flex items-center rounded bg-blue-500 px-4 py-2 text-white "
+                      onClick={() => makeAssetPublic(icon.id)}
+                    >
+                      <FaUnlock className="mr-2" /> Share Publicly
                     </button>
                   )}
+
                   <button
                     className="inline-flex items-center rounded bg-gray-300 px-4 py-2 font-bold text-gray-800 hover:bg-gray-400"
                     onClick={downloadAsset()}

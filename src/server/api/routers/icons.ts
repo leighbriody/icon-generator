@@ -4,6 +4,8 @@ import {
   publicProcedure,
 } from "~/server/api/trpc";
 
+import { z } from "zod";
+
 export const iconsRouter = createTRPCRouter({
   //get all of the users icons
   getIcons: protectedProcedure.query(async ({ ctx }) => {
@@ -21,7 +23,7 @@ export const iconsRouter = createTRPCRouter({
     //get 50 random icons
     const icons = await ctx.prisma.icon.findMany({
       where: {
-        share: "Yes" || "yes"|| true ,
+        isPublic: true,
       },
       take: 50,
       orderBy: {
@@ -31,4 +33,38 @@ export const iconsRouter = createTRPCRouter({
 
     return icons;
   }),
+  makeAssetPublic: protectedProcedure
+    .input(
+      z.object({
+        iconId: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const icon = await ctx.prisma.icon.update({
+        where: {
+          id: input.iconId,
+        },
+        data: {
+          isPublic: true,
+        },
+      });
+      return icon;
+    }),
+  makeAssetPrivate: protectedProcedure
+    .input(
+      z.object({
+        iconId: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const icon = await ctx.prisma.icon.update({
+        where: {
+          id: input.iconId,
+        },
+        data: {
+          isPublic: false,
+        },
+      });
+      return icon;
+    }),
 });
