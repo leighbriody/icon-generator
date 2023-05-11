@@ -7,6 +7,18 @@ import { type Icon } from "@prisma/client";
 const CollectionPage: NextPage = () => {
   const icons = api.icons.getIcons.useQuery();
 
+  function downloadAsset() {
+    console.log("download asset");
+  }
+
+  function makeAssetPrivate() {
+    console.log("make asset private");
+  }
+
+  function makeAssetPublic() {
+    console.log("make asset public");
+  }
+
   return (
     <>
       <Head>
@@ -17,23 +29,61 @@ const CollectionPage: NextPage = () => {
       <main className="container mx-auto mt-24 flex flex-col items-center gap-8 px-8">
         <h1 className="text-4xl">Your Assets</h1>
         <ul className="grid grid-cols-2 gap-8 sm:grid-cols-4 sm:gap-12">
-          {icons.data?.map((icon: Icon) => (
-            <li key={icon.id} className="rounded overflow-hidden">
+          {icons.data?.map((icon) => (
+            <div key={icon.id} className="overflow-hidden rounded shadow-lg">
               <Image
                 className="w-full"
-                width="100"
-                height="100"
+                width={100}
+                height={100}
                 alt={icon.prompt ?? "Icon"}
                 src={`https://leighs-icon-generator.s3.amazonaws.com/${icon.id}`}
               />
-            </li>
+              <div className="flex flex-col p-4">
+                <p className="text-gray-600">{icon.prompt}</p>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {icon.promptOptions?.map((option) => (
+                    <span
+                      key={option}
+                      className="rounded bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-300"
+                    >
+                      {option}
+                    </span>
+                  ))}
+                </div>
+                {/* 2 buttons here side by side */}
+                <div className="mt-4 flex">
+                  {icon.share == "Yes" && (
+                    <button className="mr-2 rounded bg-blue-500 px-4 py-2 text-white" onClick={makeAssetPrivate()}>
+                      Make Private
+                    </button>
+                  )}
+
+                  {icon.share != "Yes" && (
+                    <button className="mr-2 rounded bg-blue-500 px-4 py-2 text-white" onClick={makeAssetPublic()}>
+                      Share Publicly
+                    </button>
+                  )}
+                  <button
+                    className="inline-flex items-center rounded bg-gray-300 px-4 py-2 font-bold text-gray-800 hover:bg-gray-400"
+                    onClick={downloadAsset()}
+                  >
+                    <svg
+                      className="mr-2 h-4 w-4 fill-current"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+                    </svg>
+                    <span>Download</span>
+                  </button>
+                </div>
+              </div>
+            </div>
           ))}
         </ul>
       </main>
     </>
   );
 };
-
-
 
 export default CollectionPage;
