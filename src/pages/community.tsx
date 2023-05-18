@@ -22,13 +22,13 @@ const CollectionPage: NextPage = () => {
       <CommunityHero></CommunityHero>
       <main className="container mx-auto mt-24 flex flex-col items-center gap-8 px-8">
         <h1 className="text-4xl">Community Assets</h1>
-        <div className="grid grid-cols-2 gap-8 sm:grid-cols-4 sm:gap-12">
+        <div className="grid grid-cols-2 gap-8 sm:grid-cols-4 sm:gap-12 ">
           {icons.data?.map((icon: Icon) => (
             <div key={icon.id} className="overflow-hidden rounded shadow-lg">
               <Image
                 className="w-full"
-                width="100"
-                height="100"
+                width="500"
+                height="500"
                 alt={icon.prompt ?? "Icon"}
                 src={`https://leighs-icon-generator.s3.amazonaws.com/${icon.id}`}
               />

@@ -81,8 +81,8 @@ const CollectionPage: NextPage = () => {
             <div key={icon.id} className="overflow-hidden rounded shadow-lg">
               <Image
                 className="w-full"
-                width={100}
-                height={100}
+                width={250}
+                height={250}
                 alt={icon.prompt ?? "Icon"}
                 src={`https://leighs-icon-generator.s3.amazonaws.com/${icon.id}`}
               />
@@ -102,7 +102,7 @@ const CollectionPage: NextPage = () => {
                 <div className="mt-4 flex">
                   {icon.isPublic && (
                     <button
-                      className="mr-2 inline-flex items-center rounded bg-blue-500 px-4 py-2 text-white"
+                      className="mr-2 inline-flex items-center rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
                       onClick={() => makeAssetPrivate(icon.id)}
                     >
                       <FaLock className="mr-2" /> Make Private
@@ -111,7 +111,7 @@ const CollectionPage: NextPage = () => {
 
                   {!icon.isPublic && (
                     <button
-                      className="mr-2 inline-flex items-center rounded bg-blue-500 px-4 py-2 text-white "
+                      className="mr-2 inline-flex items-center rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600 "
                       onClick={() => makeAssetPublic(icon.id)}
                     >
                       <FaUnlock className="mr-2" /> Share Publicly
@@ -119,11 +119,10 @@ const CollectionPage: NextPage = () => {
                   )}
 
                   <button
-                    className="inline-flex items-center rounded bg-gray-300 px-4 py-2 font-bold text-gray-800 hover:bg-gray-400"
+                    className="inline-flex items-center rounded  bg-blue-500  px-4 py-2 font-bold text-white hover:bg-blue-600"
                     onClick={() => {
                       void downloadAsset(icon);
                     }}
-                    
                   >
                     <svg
                       className="mr-2 h-4 w-4 fill-current"

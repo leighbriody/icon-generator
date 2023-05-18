@@ -79,7 +79,17 @@ export const generateRouter = createTRPCRouter({
       }
 
       //TODO - Make fetch to dalle api
-      const finalPrompt = `a modern ${input.shape}  ${input.asset} in ${input.color} of a ${input.prompt} in the style of ${input.style} with a background color of ${input.background} minimalisttic , high quality , trending on art station , unreal engine graphics quality `;
+      // const finalPrompt = `a modern ${input.shape}  ${input.asset} in ${input.color} of a ${input.prompt} in the style of ${input.style} with a background color of ${input.background} minimalisttic , high quality , trending on art station , unreal engine graphics quality `;
+      const finalPrompt = fineTunePrompt(
+        input.shape,
+        input.asset,
+        input.color,
+        input.style,
+        input.background,
+        input.prompt
+      );
+      console.log("@@@@@@", finalPrompt);
+
       const base64EncodedImages = await generateIcon(
         finalPrompt,
         input.numberOfIcons
@@ -122,3 +132,96 @@ export const generateRouter = createTRPCRouter({
       });
     }),
 });
+
+function fineTunePrompt(
+  shape: string,
+  asset: string,
+  color: string,
+  style: string,
+  background: string,
+  prompt: string
+) {
+  if (asset === "Logo") {
+    return (
+      "High-end premium modern logo of a " +
+      prompt +
+      " in the style of " +
+      style +
+      " with a background color of " +
+      background +
+      ", high quality , trending on art station"
+    );
+  }
+
+  if (asset == "App Icon") {
+    return (
+      "High-end premium modern app icon of a " +
+      prompt +
+      " in the style of " +
+      style +
+      " with a background color of " +
+      background +
+      ", high quality , trending on art station , in the style of an iPhone app icon"
+    );
+  }
+
+  if (asset == "Vector") {
+    return (
+      "High-end premium modern vector of a " +
+      prompt +
+      " in the style of " +
+      style +
+      " with a background color of " +
+      background +
+      ", high quality , trending on art station"
+    );
+  }
+
+  if (asset == "Digital Art") {
+    return (
+      "High-end premium modern digital art of a " +
+      prompt +
+      " in the style of " +
+      style +
+      " with a background color of " +
+      background +
+      ", high quality , creative , trending on art station"
+    );
+  }
+
+  if (asset == "Letters") {
+    return (
+      "High-end premium modern logo of the letters " +
+      prompt +
+      " in the style of " +
+      style +
+      " with a background color of " +
+      background +
+      ", high quality , professional , eatured on 99designs"
+    );
+  }
+
+  if (asset == "Photo") {
+    return (
+      "High-end premium modern photorealistic photo of a " +
+      prompt +
+      " in the style of " +
+      style +
+      " with a background color of " +
+      background +
+      ", high quality , 4k , so realistic you can't tell it's not real"
+    );
+  }
+
+  return (
+    "High-end premium modern " +
+    asset +
+    " of a " +
+    prompt +
+    " in the style of " +
+    style +
+    " with a background color of " +
+    background +
+    ", high quality , trending on art station"
+  );
+}

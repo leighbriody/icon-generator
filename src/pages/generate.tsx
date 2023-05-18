@@ -16,8 +16,6 @@ const assets = [
   "Icon",
   "App Icon",
   "Photo",
-  // "Painting",
-  // "Wallpaper",
   "Vector",
   "Digital Art",
   "Letters",
