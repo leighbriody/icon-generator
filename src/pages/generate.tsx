@@ -2,7 +2,7 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import FormGroup from "~/components/FormGroup";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { api } from "~/utils/api";
 import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
@@ -10,6 +10,14 @@ import clsx from "clsx";
 import { Button } from "~/components/Button";
 import GenerateHeader from "~/components/GenerateHeader";
 import { SkeletonLoadingImage } from "~/components/SkeletonLoadingImage";
+import { useRouter } from "next/router";
+import {
+  findAsset,
+  findBackground,
+  findColor,
+  findShape,
+  findStyle,
+} from "~/utils/findStrings";
 
 const assets = [
   "Logo",
@@ -68,6 +76,15 @@ const styles = [
 ];
 
 const GeneratePage: NextPage = () => {
+  const router = useRouter();
+  const { query } = router;
+  const { id } = query;
+
+  //use state for the form
+  const [error, setError] = useState("");
+  const [imagesUrl, setImagesUrl] = useState<{ imageUrl: string }[]>([]);
+  const [passedVariation, setPassedVariation] = useState<Icon | null>(null);
+
   const [form, setForm] = useState({
     prompt: "",
     color: "",
@@ -79,8 +96,48 @@ const GeneratePage: NextPage = () => {
     isPublic: true,
   });
 
-  const [error, setError] = useState("");
-  const [imagesUrl, setImagesUrl] = useState<{ imageUrl: string }[]>([]);
+  useEffect(() => {
+    if (id) {
+      const icon = api.icons.getIcon.useQuery({ iconId: id.toString() });
+      if (icon.data) {
+        const prompt = icon.data.prompt;
+        const color = findColor(icon.data.promptOptions);
+        const numberOfIcons = "1";
+        const shape = findShape(icon.data.promptOptions);
+        const style = findStyle(icon.data.promptOptions);
+        const asset = findAsset(icon.data.promptOptions);
+        const background = findBackground(icon.data.promptOptions)?.split(
+          " "
+        )[0];
+
+        if (
+          !color ||
+          !shape ||
+          !style ||
+          !asset ||
+          !background ||
+          !prompt ||
+          !numberOfIcons
+        ) {
+          console.log("error");
+          //should probably deal with this error
+          return;
+        }
+
+        setForm((prev) => ({
+          ...prev,
+          prompt,
+          color,
+          numberOfIcons,
+          shape,
+          style,
+          asset,
+          background,
+          isPublic: true,
+        }));
+      }
+    }
+  }, [id]);
 
   const generateIcon = api.generate.generateIcon.useMutation({
     onSuccess(data) {
@@ -114,8 +171,6 @@ const GeneratePage: NextPage = () => {
   const session = useSession();
   const isLoggedIn = !!session.data;
 
-  //use effect that if the user is not logged in show them an alert saying they need to
-
   return (
     <>
       <Head>
@@ -126,8 +181,8 @@ const GeneratePage: NextPage = () => {
       <GenerateHeader></GenerateHeader>
       <main className="container mx-auto mb-8 mt-0 flex min-h-screen flex-col gap-4 px-8">
         <form className="flex flex-col gap-4" onSubmit={handleFormSubmit}>
-          <h2 className="mb-4 text-2xl font-bold">
-            1. Describe what you want the asset to look like
+          <h2 className="mb-4 text-left text-3xl font-bold leading-tight">
+            1. Describe what your asset to look like
           </h2>
           <div className="flex flex-col gap-2">
             <label htmlFor="prompt" className="text-lg font-semibold">
@@ -144,7 +199,9 @@ const GeneratePage: NextPage = () => {
             />
           </div>
 
-          <h2 className="mb-4 text-2xl font-bold">2. Pick your asset type.</h2>
+          <h2 className="mb-4 text-left text-3xl font-bold leading-tight">
+            2. Choose your asset type
+          </h2>
           <div className="grid grid-cols-2 gap-4">
             {assets.map((asset) => (
               <label key={asset} className="flex flex-col items-center gap-2">
@@ -156,25 +213,48 @@ const GeneratePage: NextPage = () => {
                   onChange={() => setForm((prev) => ({ ...prev, asset }))}
                   className="hidden"
                 />
-                <div className="h-32 w-32 rounded-full border border-gray-300">
+                <div
+                  className={clsx(
+                    "h-32 w-32 rounded-full border border-gray-300",
+                    {
+                      "border-8 border-blue-500": asset === form.asset,
+                      "bg-blue-200": asset === form.asset,
+                      "shadow-md": asset === form.asset,
+                    }
+                  )}
+                >
                   <img
                     src={`/styles/${asset
                       .toLowerCase()
                       .replace(/\s/g, "")}.png`}
                     alt=""
                     className={clsx("h-full w-full rounded-full", {
-                      "opacity-50": asset !== form.asset,
+                      "opacity-30": asset !== form.asset,
                     })}
                   />
                 </div>
-                <span>{asset}</span>
+                <span
+                  className={clsx({
+                    "font-bold": asset === form.asset,
+                    "text-blue-500": asset === form.asset,
+                    underline: asset === form.asset,
+                  })}
+                >
+                  {asset}
+                </span>
               </label>
             ))}
           </div>
-          <h2 className="mb-4 text-2xl font-bold">3. Pick your asset color.</h2>
+
+          <h2 className="mb-4 text-left text-3xl font-bold leading-tight">
+            5. Choose your asset color.
+          </h2>
           <div className="grid grid-cols-2 gap-4">
             {colors.map((color) => (
-              <label key={color} className="flex flex-col items-center gap-2">
+              <label
+                key={color}
+                className="relative flex flex-col items-center gap-2"
+              >
                 <input
                   type="radio"
                   name="color"
@@ -183,23 +263,40 @@ const GeneratePage: NextPage = () => {
                   onChange={() => setForm((prev) => ({ ...prev, color }))}
                   className="hidden"
                 />
-                <div className="h-32 w-32 rounded-full border border-gray-300">
+                <div
+                  className={clsx(
+                    "h-32 w-32 rounded-full border border-gray-300",
+                    {
+                      "border-8 border-blue-500": color === form.color,
+                      "bg-blue-200": color === form.color,
+                      "shadow-md": color === form.color,
+                    }
+                  )}
+                >
                   <img
                     src={`/styles/${color
                       .toLowerCase()
                       .replace(/\s/g, "")}foreground.png`}
                     alt=""
                     className={clsx("h-full w-full rounded-full", {
-                      "opacity-50": color !== form.color,
+                      "opacity-30": color !== form.color,
                     })}
                   />
                 </div>
-                <span>{color}</span>
+                <span
+                  className={clsx({
+                    "font-bold": color === form.color,
+                    "text-blue-500": color === form.color,
+                    underline: color === form.color,
+                  })}
+                >
+                  {color}
+                </span>
               </label>
             ))}
           </div>
-          <h2 className="mb-4 text-2xl font-bold">
-            4. Pick your asset background color.
+          <h2 className="mb-4 text-left text-3xl font-bold leading-tight">
+            5. Choose your asset background color.
           </h2>
           <div className="grid grid-cols-2 gap-4">
             {backgroundColors.map((background) => (
@@ -215,22 +312,42 @@ const GeneratePage: NextPage = () => {
                   onChange={() => setForm((prev) => ({ ...prev, background }))}
                   className="hidden"
                 />
-                <div className="h-32 w-32 rounded-full border border-gray-300">
+                <div
+                  className={clsx(
+                    "h-32 w-32 rounded-full border border-gray-300",
+                    {
+                      "border-8 border-blue-500":
+                        background === form.background,
+                      "bg-blue-200": background === form.background,
+                      "shadow-md": background === form.background,
+                    }
+                  )}
+                >
                   <img
                     src={`/styles/${background
                       .toLowerCase()
                       .replace(/\s/g, "")}background.png`}
                     alt=""
                     className={clsx("h-full w-full rounded-full", {
-                      "opacity-50": background !== form.background,
+                      "opacity-30": background !== form.background,
                     })}
                   />
                 </div>
-                <span>{background}</span>
+                <span
+                  className={clsx({
+                    "font-bold": background === form.background,
+                    "text-blue-500": background === form.background,
+                    underline: background === form.background,
+                  })}
+                >
+                  {background}
+                </span>
               </label>
             ))}
           </div>
-          <h2 className="mb-4 text-2xl font-bold">5. Pick your asset shape.</h2>
+          <h2 className="mb-4 text-left text-3xl font-bold leading-tight">
+            5. Choose your asset shape.
+          </h2>
           <div className="grid grid-cols-2 gap-4">
             {shapes.map((shape) => (
               <label key={shape} className="flex flex-col items-center gap-2">
@@ -242,23 +359,42 @@ const GeneratePage: NextPage = () => {
                   onChange={() => setForm((prev) => ({ ...prev, shape }))}
                   className="hidden"
                 />
-                <div className="h-32 w-32 rounded-full border border-gray-300">
+                <div
+                  className={clsx(
+                    "h-32 w-32 rounded-full border border-gray-300",
+                    {
+                      "border-8 border-blue-500": shape === form.shape,
+                      "bg-blue-200": shape === form.shape,
+                      "shadow-md": shape === form.shape,
+                    }
+                  )}
+                >
                   <img
                     src={`/styles/${shape
                       .toLowerCase()
                       .replace(/\s/g, "")}.png`}
                     alt=""
                     className={clsx("h-full w-full rounded-full", {
-                      "opacity-50": shape !== form.shape,
+                      "opacity-30": shape !== form.shape,
                     })}
                   />
                 </div>
-                <span>{shape}</span>
+                <span
+                  className={clsx({
+                    "font-bold": shape === form.shape,
+                    "text-blue-500": shape === form.shape,
+                    underline: shape === form.shape,
+                  })}
+                >
+                  {shape}
+                </span>
               </label>
             ))}
           </div>
 
-          <h2 className="mb-4 text-2xl font-bold">6. Pick your asset style.</h2>
+          <h2 className="mb-4 text-left text-3xl font-bold leading-tight">
+            6. Choose your asset style.
+          </h2>
           <div className="grid grid-cols-2 gap-4">
             {styles.map((style) => (
               <label key={style} className="flex flex-col items-center gap-2">
@@ -270,51 +406,90 @@ const GeneratePage: NextPage = () => {
                   onChange={() => setForm((prev) => ({ ...prev, style }))}
                   className="hidden"
                 />
-                <div className="h-32 w-32 rounded-full border border-gray-300">
+                <div
+                  className={clsx(
+                    "h-32 w-32 rounded-full border border-gray-300",
+                    {
+                      "border-8 border-blue-500": style === form.style,
+                      "bg-blue-200": style === form.style,
+                      "shadow-md": style === form.style,
+                    }
+                  )}
+                >
                   <img
                     src={`/styles/${style
                       .toLowerCase()
                       .replace(/\s/g, "")}.png`}
                     alt=""
                     className={clsx("h-full w-full rounded-full", {
-                      "opacity-50": style !== form.style,
+                      "opacity-30": style !== form.style,
                     })}
                   />
                 </div>
-                <span>{style}</span>
+                <span
+                  className={clsx({
+                    "font-bold": style === form.style,
+                    "text-blue-500": style === form.style,
+                    underline: style === form.style,
+                  })}
+                >
+                  {style}
+                </span>
               </label>
             ))}
           </div>
-          <h2 className="mb-4 text-2xl font-bold">
-            Do you want to share this with the community ?
+          <h2 className="mb-4 text-left text-3xl font-bold leading-tight">
+            7. Do you want to share your asset with the community?
           </h2>
           <div className="grid grid-cols-2 gap-4">
             {publicOptions.map((isPublic) => (
-              <label key={isPublic? "yes":"no"} className="flex flex-col items-center gap-2">
+              <label
+                key={isPublic ? "yes" : "no"}
+                className="flex flex-col items-center gap-2"
+              >
                 <input
                   type="radio"
                   name="isPublic"
-                  value={isPublic? "yes":"no"}
+                  value={isPublic ? "yes" : "no"}
                   checked={isPublic === form.isPublic}
                   onChange={() => setForm((prev) => ({ ...prev, isPublic }))}
                   className="hidden"
                 />
-                <div className="h-32 w-32 rounded-full border border-gray-300">
+                <div
+                  className={clsx(
+                    "h-32 w-32 rounded-full border border-gray-300",
+                    {
+                      "border-8 border-blue-500": isPublic === form.isPublic,
+                      "bg-blue-200": isPublic === form.isPublic,
+                      "shadow-md": isPublic === form.isPublic,
+                    }
+                  )}
+                >
                   <img
-                    src={`/styles/${isPublic? "yes":"no"
-                      .toLowerCase()
-                      .replace(/\s/g, "")}.png`}
+                    src={`/styles/${
+                      isPublic ? "yes" : "no".toLowerCase().replace(/\s/g, "")
+                    }.png`}
                     alt=""
                     className={clsx("h-full w-full rounded-full", {
-                      "opacity-50": isPublic !== form.isPublic,
+                      "opacity-30": isPublic !== form.isPublic,
                     })}
                   />
                 </div>
-                <span>{isPublic? "Yes":"No"}</span>
+                <span
+                  className={clsx({
+                    "font-bold": isPublic === form.isPublic,
+                    "text-blue-500": isPublic === form.isPublic,
+                    underline: isPublic === form.isPublic,
+                  })}
+                >
+                  {isPublic ? "Yes" : "No"}
+                </span>
               </label>
             ))}
           </div>
-          <h2 className="text-xl">7. How many do you want?</h2>
+          <h2 className="mb-4 text-left text-3xl font-bold leading-tight">
+            8. How many do you want to generate? (1 credit each)
+          </h2>
           <FormGroup>
             <label className="mb-4 sm:col-span-3 sm:mb-0"></label>
             <input

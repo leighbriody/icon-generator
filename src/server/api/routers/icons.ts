@@ -67,4 +67,20 @@ export const iconsRouter = createTRPCRouter({
       });
       return icon;
     }),
+  getIcon: publicProcedure
+    .input(
+      z.object({
+        iconId: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      //get 50 random icons
+      const icon = await ctx.prisma.icon.findUnique({
+        where: {
+          id: input.iconId,
+        },
+      });
+
+      return icon;
+    }),
 });
