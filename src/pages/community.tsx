@@ -4,6 +4,7 @@ import { api } from "~/utils/api";
 import Image from "next/image";
 import { type Icon } from "@prisma/client";
 import { CommunityHero } from "~/components/CommunityHero";
+import { useState } from "react";
 
 const CollectionPage: NextPage = () => {
   const icons = api.icons.getCommunityIcons.useQuery();
@@ -11,6 +12,8 @@ const CollectionPage: NextPage = () => {
   // function makeVariation(){
   //   console.log("makeVariation")
   // }
+
+  const [selectedIcon, setSelectedIcon] = useState<string | null>(null);
 
   return (
     <>
@@ -22,36 +25,52 @@ const CollectionPage: NextPage = () => {
       <CommunityHero></CommunityHero>
       <main className="container mx-auto mt-24 flex flex-col items-center gap-8 px-8">
         <h1 className="text-4xl">Community Assets</h1>
-        <div className="grid grid-cols-2 gap-8 sm:grid-cols-4 sm:gap-12 ">
+        <div className="grid grid-cols-2 gap-8 sm:grid-cols-2 sm:gap-12 md:grid-cols-3 lg:grid-cols-4">
           {icons.data?.map((icon: Icon) => (
-            <div key={icon.id} className="overflow-hidden rounded shadow-lg">
+            <div key={icon.id} className="group relative">
               <Image
                 className="w-full"
-                width="500"
-                height="500"
+                width={500}
+                height={500}
                 alt={icon.prompt ?? "Icon"}
                 src={`https://leighs-icon-generator.s3.amazonaws.com/${icon.id}`}
               />
-              <div className="flex flex-col p-4">
-                <p className="text-gray-600">{icon.prompt}</p>
-                <div className="mt-2 flex flex-wrap gap-2">
-                  {icon.promptOptions?.map((option) => (
-                    <span
-                      key={option}
-                      className="rounded bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-300"
-                    >
-                      {option}
-                    </span>
-                  ))}
-                </div>
-                <button
-                  className="mt-4 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-                  // eslint-disable-next-line @typescript-eslint/no-misused-promises
-                  // onClick={makeVariation()}
+              <button
+                className="absolute right-2 top-2 rounded-full bg-gray-200 p-2 transition-colors duration-300 ease-in-out group-hover:bg-gray-800"
+                onClick={() => {
+                  if (selectedIcon === icon.id) {
+                    setSelectedIcon(null); // Close the dropdown
+                  } else {
+                    setSelectedIcon(icon.id); // Open the dropdown
+                  }
+                }}
+              >
+                {/* Add your menu button icon here */}
+                {/* For example, you can use an SVG */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="h-6 w-6 text-gray-900"
                 >
-                  Make Variation
-                </button>
-              </div>
+                  <path d="M3 12h18M3 6h18M3 18h18"></path>
+                </svg>
+              </button>
+              {selectedIcon === icon.id && (
+                <div className="absolute right-2 top-10 z-10 rounded-md bg-gray-800 p-2">
+                  <ul className="space-y-2">
+                    <li>
+                      <button className="text-white hover:text-gray-200">
+                        Make Variation
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              )}
             </div>
           ))}
         </div>

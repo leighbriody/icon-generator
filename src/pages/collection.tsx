@@ -13,6 +13,9 @@ const CollectionPage: NextPage = () => {
     null
   );
 
+  const [expandedIcons, setExpandedIcons] = useState([]);
+  const [selectedIcon, setSelectedIcon] = useState<string | null>(null);
+
   const makePrivate = api.icons.makeAssetPrivate.useMutation({
     onSuccess(data) {
       console.log("make asset private success", data);
@@ -76,9 +79,9 @@ const CollectionPage: NextPage = () => {
       </Head>
       <main className="container mx-auto mt-24 flex flex-col items-center gap-8 px-8">
         <h1 className="text-4xl">Your Assets</h1>
-        <ul className="grid grid-cols-2 gap-8 sm:grid-cols-4 sm:gap-12">
-          {icons.data?.map((icon) => (
-            <div key={icon.id} className="overflow-hidden rounded shadow-lg">
+        <ul className="grid grid-cols-2 gap-8 sm:grid-cols-2 sm:gap-12 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+          {icons.data?.map((icon: Icon) => (
+            <div key={icon.id} className="group relative">
               <Image
                 className="w-full"
                 width={250}
@@ -86,77 +89,68 @@ const CollectionPage: NextPage = () => {
                 alt={icon.prompt ?? "Icon"}
                 src={`https://leighs-icon-generator.s3.amazonaws.com/${icon.id}`}
               />
-              <div className="flex flex-col p-4">
-                <p className="text-gray-600">{icon.prompt}</p>
-                <div className="mt-2 flex flex-wrap gap-2">
-                  {icon.promptOptions?.map((option) => (
-                    <span
-                      key={option}
-                      className="rounded bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-300"
-                    >
-                      {option}
-                    </span>
-                  ))}
-                </div>
-                {/* 2 buttons here side by side */}
-                <div className="mt-4 flex">
-                  {icon.isPublic && (
-                    <button
-                      className="mr-2 inline-flex items-center rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
-                      onClick={() => makeAssetPrivate(icon.id)}
-                    >
-                      <FaLock className="mr-2" /> Make Private
-                    </button>
-                  )}
-
-                  {!icon.isPublic && (
-                    <button
-                      className="mr-2 inline-flex items-center rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600 "
-                      onClick={() => makeAssetPublic(icon.id)}
-                    >
-                      <FaUnlock className="mr-2" /> Share Publicly
-                    </button>
-                  )}
-
-                  <button
-                    className="inline-flex items-center rounded  bg-blue-500  px-4 py-2 font-bold text-white hover:bg-blue-600"
-                    onClick={() => {
-                      void downloadAsset(icon);
-                    }}
-                  >
-                    <svg
-                      className="mr-2 h-4 w-4 fill-current"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                    >
-                      <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
-                    </svg>
-                    <span>Download</span>
-                    {isDownloadingAsset == icon && (
-                      <svg
-                        className="-mr-1 ml-3 h-5 w-5 animate-spin text-white"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <circle
-                          className="opacity-25"
-                          cx="12"
-                          cy="12"
-                          r="10"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                        ></circle>
-                        <path
-                          className="opacity-75"
-                          fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12z"
-                        ></path>
-                      </svg>
+              <button
+                className="absolute right-2 top-2 rounded-full bg-gray-200 p-2 transition-colors duration-300 ease-in-out group-hover:bg-gray-800"
+                onClick={() => {
+                  if (selectedIcon === icon.id) {
+                    setSelectedIcon(null); // Close the dropdown
+                  } else {
+                    setSelectedIcon(icon.id); // Open the dropdown
+                  }
+                }}
+              >
+                {/* Add your menu button icon here */}
+                {/* For example, you can use an SVG */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="h-6 w-6 text-gray-900"
+                >
+                  <path d="M3 12h18M3 6h18M3 18h18"></path>
+                </svg>
+              </button>
+              {selectedIcon === icon.id && (
+                <div className="absolute right-2 top-10 z-10 rounded-md bg-gray-800 p-2">
+                  <ul className="space-y-2">
+                    {icon.isPublic && (
+                      <li>
+                        <button
+                          className="text-white hover:text-gray-200"
+                          onClick={() => makeAssetPrivate(icon.id)}
+                        >
+                          Make Private
+                        </button>
+                      </li>
                     )}
-                  </button>
+
+                    {!icon.isPublic && (
+                      <li>
+                        <button
+                          className="text-white hover:text-gray-200"
+                          onClick={() => makeAssetPublic(icon.id)}
+                        >
+                          Make Public
+                        </button>
+                      </li>
+                    )}
+                    <li>
+                      <button
+                        className="text-white hover:text-gray-200"
+                        onClick={() => {
+                          void downloadAsset(icon);
+                        }}
+                      >
+                        Download
+                      </button>
+                    </li>
+                  </ul>
                 </div>
-              </div>
+              )}
             </div>
           ))}
         </ul>
