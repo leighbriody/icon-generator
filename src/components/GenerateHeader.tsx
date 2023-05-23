@@ -14,7 +14,7 @@ export default function GenerateHeader() {
           </h1>
           <p className="mb-6 px-0 text-lg text-gray-600 md:text-xl lg:px-24">
             {" "}
-            Just fill out the quick form below and we'll generate a bunch of
+            Just fill out the quick form below and we will generate a bunch of
             assets for you to use.
           </p>
         </div>

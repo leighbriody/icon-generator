@@ -83,7 +83,16 @@ const GeneratePage: NextPage = () => {
   //use state for the form
   const [error, setError] = useState("");
   const [imagesUrl, setImagesUrl] = useState<{ imageUrl: string }[]>([]);
-  const [passedVariation, setPassedVariation] = useState<Icon | null>(null);
+
+  // Call the useQuery hook outside of useEffect
+  let test = "";
+  if (id) {
+    test = id.toString();
+  }
+
+  const iconQuery = api.icons.getIcon.useQuery({ iconId: test });
+
+  console.log("passedVariation", iconQuery);
 
   const [form, setForm] = useState({
     prompt: "",
@@ -95,49 +104,45 @@ const GeneratePage: NextPage = () => {
     background: "",
     isPublic: true,
   });
-
   useEffect(() => {
-    if (id) {
-      const icon = api.icons.getIcon.useQuery({ iconId: id.toString() });
-      if (icon.data) {
-        const prompt = icon.data.prompt;
-        const color = findColor(icon.data.promptOptions);
-        const numberOfIcons = "1";
-        const shape = findShape(icon.data.promptOptions);
-        const style = findStyle(icon.data.promptOptions);
-        const asset = findAsset(icon.data.promptOptions);
-        const background = findBackground(icon.data.promptOptions)?.split(
-          " "
-        )[0];
+    if (id && iconQuery.data) {
+      const prompt = iconQuery.data.prompt;
+      const color = findColor(iconQuery.data.promptOptions);
+      const numberOfIcons = "1";
+      const shape = findShape(iconQuery.data.promptOptions);
+      const style = findStyle(iconQuery.data.promptOptions);
+      const asset = findAsset(iconQuery.data.promptOptions);
+      const background = findBackground(iconQuery.data.promptOptions)?.split(
+        " "
+      )[0];
 
-        if (
-          !color ||
-          !shape ||
-          !style ||
-          !asset ||
-          !background ||
-          !prompt ||
-          !numberOfIcons
-        ) {
-          console.log("error");
-          //should probably deal with this error
-          return;
-        }
-
-        setForm((prev) => ({
-          ...prev,
-          prompt,
-          color,
-          numberOfIcons,
-          shape,
-          style,
-          asset,
-          background,
-          isPublic: true,
-        }));
+      if (
+        !color ||
+        !shape ||
+        !style ||
+        !asset ||
+        !background ||
+        !prompt ||
+        !numberOfIcons
+      ) {
+        console.log("error");
+        //should probably deal with this error
+        return;
       }
+
+      setForm((prev) => ({
+        ...prev,
+        prompt,
+        color,
+        numberOfIcons,
+        shape,
+        style,
+        asset,
+        background,
+        isPublic: true,
+      }));
     }
-  }, [id]);
+  }, [id, iconQuery.data]);
 
   const generateIcon = api.generate.generateIcon.useMutation({
     onSuccess(data) {
