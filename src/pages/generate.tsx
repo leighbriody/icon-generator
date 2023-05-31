@@ -228,7 +228,7 @@ const GeneratePage: NextPage = () => {
                     }
                   )}
                 >
-                  <img
+                  <Image
                     src={`/styles/${asset
                       .toLowerCase()
                       .replace(/\s/g, "")}.png`}
@@ -236,7 +236,8 @@ const GeneratePage: NextPage = () => {
                     className={clsx("h-full w-full rounded-full", {
                       "opacity-30": asset !== form.asset,
                     })}
-                    loading='lazy'
+                    width={250}
+                    height={250}
                   />
                 </div>
                 <span
@@ -251,9 +252,8 @@ const GeneratePage: NextPage = () => {
               </label>
             ))}
           </div>
-
           <h2 className="mb-4 text-left text-3xl font-bold leading-tight">
-            5. Choose your asset color.
+            3. Choose your asset color.
           </h2>
           <div className="grid grid-cols-2 gap-4">
             {colors.map((color) => (
@@ -279,7 +279,7 @@ const GeneratePage: NextPage = () => {
                     }
                   )}
                 >
-                  <img
+                  <Image
                     src={`/styles/${color
                       .toLowerCase()
                       .replace(/\s/g, "")}foreground.png`}
@@ -287,7 +287,8 @@ const GeneratePage: NextPage = () => {
                     className={clsx("h-full w-full rounded-full", {
                       "opacity-30": color !== form.color,
                     })}
-                    loading='lazy'
+                    width={250}
+                    height={250}
                   />
                 </div>
                 <span
@@ -303,7 +304,7 @@ const GeneratePage: NextPage = () => {
             ))}
           </div>
           <h2 className="mb-4 text-left text-3xl font-bold leading-tight">
-            5. Choose your asset background color.
+            4. Choose your asset background color.
           </h2>
           <div className="grid grid-cols-2 gap-4">
             {backgroundColors.map((background) => (
@@ -330,7 +331,7 @@ const GeneratePage: NextPage = () => {
                     }
                   )}
                 >
-                  <img
+                  <Image
                     src={`/styles/${background
                       .toLowerCase()
                       .replace(/\s/g, "")}background.png`}
@@ -338,7 +339,8 @@ const GeneratePage: NextPage = () => {
                     className={clsx("h-full w-full rounded-full", {
                       "opacity-30": background !== form.background,
                     })}
-                    loading='lazy'
+                    width={250}
+                    height={250}
                   />
                 </div>
                 <span
@@ -377,7 +379,7 @@ const GeneratePage: NextPage = () => {
                     }
                   )}
                 >
-                  <img
+                  <Image
                     src={`/styles/${shape
                       .toLowerCase()
                       .replace(/\s/g, "")}.png`}
@@ -385,7 +387,8 @@ const GeneratePage: NextPage = () => {
                     className={clsx("h-full w-full rounded-full", {
                       "opacity-30": shape !== form.shape,
                     })}
-                    loading='lazy'
+                    width={250}
+                    height={250}
                   />
                 </div>
                 <span
@@ -425,7 +428,7 @@ const GeneratePage: NextPage = () => {
                     }
                   )}
                 >
-                  <img
+                  <Image
                     src={`/styles/${style
                       .toLowerCase()
                       .replace(/\s/g, "")}.png`}
@@ -433,7 +436,8 @@ const GeneratePage: NextPage = () => {
                     className={clsx("h-full w-full rounded-full", {
                       "opacity-30": style !== form.style,
                     })}
-                    loading='lazy'
+                    width={250}
+                    height={250}
                   />
                 </div>
                 <span
@@ -451,6 +455,7 @@ const GeneratePage: NextPage = () => {
           <h2 className="mb-4 text-left text-3xl font-bold leading-tight">
             7. Do you want to share your asset with the community?
           </h2>
+
           <div className="grid grid-cols-2 gap-4">
             {publicOptions.map((isPublic) => (
               <label
@@ -475,7 +480,7 @@ const GeneratePage: NextPage = () => {
                     }
                   )}
                 >
-                  <img
+                  <Image
                     src={`/styles/${
                       isPublic ? "yes" : "no".toLowerCase().replace(/\s/g, "")
                     }.png`}
@@ -483,7 +488,8 @@ const GeneratePage: NextPage = () => {
                     className={clsx("h-full w-full rounded-full", {
                       "opacity-30": isPublic !== form.isPublic,
                     })}
-                    loading='lazy'
+                    width={250}
+                    height={250}
                   />
                 </div>
                 <span
