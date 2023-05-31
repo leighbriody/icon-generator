@@ -228,7 +228,7 @@ const GeneratePage: NextPage = () => {
                     }
                   )}
                 >
-                  <img
+                  <Image
                     src={`/styles/${asset
                       .toLowerCase()
                       .replace(/\s/g, "")}.png`}
@@ -236,7 +236,6 @@ const GeneratePage: NextPage = () => {
                     className={clsx("h-full w-full rounded-full", {
                       "opacity-30": asset !== form.asset,
                     })}
-                    loading='lazy'
                   />
                 </div>
                 <span
@@ -279,7 +278,7 @@ const GeneratePage: NextPage = () => {
                     }
                   )}
                 >
-                  <img
+                  <Image
                     src={`/styles/${color
                       .toLowerCase()
                       .replace(/\s/g, "")}foreground.png`}
@@ -287,7 +286,6 @@ const GeneratePage: NextPage = () => {
                     className={clsx("h-full w-full rounded-full", {
                       "opacity-30": color !== form.color,
                     })}
-                    loading='lazy'
                   />
                 </div>
                 <span
@@ -330,7 +328,7 @@ const GeneratePage: NextPage = () => {
                     }
                   )}
                 >
-                  <img
+                  <Image
                     src={`/styles/${background
                       .toLowerCase()
                       .replace(/\s/g, "")}background.png`}
@@ -338,7 +336,6 @@ const GeneratePage: NextPage = () => {
                     className={clsx("h-full w-full rounded-full", {
                       "opacity-30": background !== form.background,
                     })}
-                    loading='lazy'
                   />
                 </div>
                 <span
@@ -377,7 +374,7 @@ const GeneratePage: NextPage = () => {
                     }
                   )}
                 >
-                  <img
+                  <Image
                     src={`/styles/${shape
                       .toLowerCase()
                       .replace(/\s/g, "")}.png`}
@@ -385,7 +382,6 @@ const GeneratePage: NextPage = () => {
                     className={clsx("h-full w-full rounded-full", {
                       "opacity-30": shape !== form.shape,
                     })}
-                    loading='lazy'
                   />
                 </div>
                 <span
@@ -425,7 +421,7 @@ const GeneratePage: NextPage = () => {
                     }
                   )}
                 >
-                  <img
+                  <Image
                     src={`/styles/${style
                       .toLowerCase()
                       .replace(/\s/g, "")}.png`}
@@ -433,7 +429,9 @@ const GeneratePage: NextPage = () => {
                     className={clsx("h-full w-full rounded-full", {
                       "opacity-30": style !== form.style,
                     })}
-                    loading='lazy'
+                    layout="fill"
+                    objectFit="cover"
+                    loading="lazy"
                   />
                 </div>
                 <span
@@ -475,7 +473,7 @@ const GeneratePage: NextPage = () => {
                     }
                   )}
                 >
-                  <img
+                  <Image
                     src={`/styles/${
                       isPublic ? "yes" : "no".toLowerCase().replace(/\s/g, "")
                     }.png`}
@@ -483,7 +481,6 @@ const GeneratePage: NextPage = () => {
                     className={clsx("h-full w-full rounded-full", {
                       "opacity-30": isPublic !== form.isPublic,
                     })}
-                    loading='lazy'
                   />
                 </div>
                 <span
