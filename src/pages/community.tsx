@@ -59,7 +59,7 @@ const CollectionPage: NextPage = () => {
       <CommunityHero></CommunityHero>
       <main className="container mx-auto mt-24 flex flex-col items-center gap-8 px-8">
         <h1 className="text-4xl">Community Assets</h1>
-        <div className="grid grid-cols-2 gap-8 sm:grid-cols-2 sm:gap-12 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-8 sm:grid-cols-2 sm:gap-12 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
           {icons.data?.map((icon: Icon) => (
             <div key={icon.id} className="group relative">
               <Image
