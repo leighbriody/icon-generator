@@ -37,10 +37,7 @@ async function generateIcon(prompt: string, numberOfIcons = 1) {
     return response.data.data.map((result) => result.b64_json || "");
   }
 }
-//we have a router and we need to make a method
-//that our form can submit to
 
-//we are saying this endpint we have to have a prompt passed to it
 
 export const generateRouter = createTRPCRouter({
   generateIcon: protectedProcedure
@@ -88,7 +85,6 @@ export const generateRouter = createTRPCRouter({
         input.background,
         input.prompt
       );
-      console.log("@@@@@@", finalPrompt);
 
       const base64EncodedImages = await generateIcon(
         finalPrompt,
