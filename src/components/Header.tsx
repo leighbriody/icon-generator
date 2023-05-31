@@ -66,51 +66,57 @@ export function Header() {
           >
             <ul className="mt-4 flex flex-col font-medium lg:mt-0 lg:flex-row lg:space-x-8">
               {isLoggedIn && (
-                <li className="lg:hover:text-primary-700 block border-b border-gray-100 py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white lg:border-0 lg:p-0 lg:hover:bg-transparent lg:dark:hover:bg-transparent lg:dark:hover:text-white">
-                  <PrimaryLink href="/collection">My Assets</PrimaryLink>
-                </li>
+                <PrimaryLink href="/collection">
+                  <li className="lg:hover:text-primary-700 block border-b border-gray-100 py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white lg:border-0 lg:p-0 lg:hover:bg-transparent lg:dark:hover:bg-transparent lg:dark:hover:text-white">
+                    My Assets
+                  </li>
+                </PrimaryLink>
               )}
-              <li className="lg:hover:text-primary-700 block border-b border-gray-100 py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white lg:border-0 lg:p-0 lg:hover:bg-transparent lg:dark:hover:bg-transparent lg:dark:hover:text-white">
-                <PrimaryLink href="/community">Community</PrimaryLink>
-              </li>
-              <li className="lg:hover:text-primary-700 block border-b border-gray-100 py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white lg:border-0 lg:p-0 lg:hover:bg-transparent lg:dark:hover:bg-transparent lg:dark:hover:text-white">
-                <PrimaryLink href="/generate">Generate</PrimaryLink>
-              </li>
-              {!isLoggedIn && (
+              <PrimaryLink href="/community">
                 <li className="lg:hover:text-primary-700 block border-b border-gray-100 py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white lg:border-0 lg:p-0 lg:hover:bg-transparent lg:dark:hover:bg-transparent lg:dark:hover:text-white">
-                  <PrimaryLink
-                    onClick={() => {
-                      signIn("google").catch(console.error);
-                    }}
-                    href={"/"}
-                  >
-                    Login
-                  </PrimaryLink>
+                  Community
                 </li>
+              </PrimaryLink>
+              <PrimaryLink href="/generate">
+                <li className="lg:hover:text-primary-700 block border-b border-gray-100 py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white lg:border-0 lg:p-0 lg:hover:bg-transparent lg:dark:hover:bg-transparent lg:dark:hover:text-white">
+                  Generate
+                </li>
+              </PrimaryLink>
+              {!isLoggedIn && (
+                <PrimaryLink
+                  onClick={() => {
+                    signIn("google").catch(console.error);
+                  }}
+                  href={"/"}
+                >
+                  <li className="lg:hover:text-primary-700 block border-b border-gray-100 py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white lg:border-0 lg:p-0 lg:hover:bg-transparent lg:dark:hover:bg-transparent lg:dark:hover:text-white">
+                    Login
+                  </li>
+                </PrimaryLink>
               )}
 
               {isLoggedIn && (
                 <>
-                  <li className="lg:hover:text-primary-700 block border-b border-gray-100 py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white lg:border-0 lg:p-0 lg:hover:bg-transparent lg:dark:hover:bg-transparent lg:dark:hover:text-white">
-                    <PrimaryLink
-                      onClick={() => {
-                        signOut().catch(console.error);
-                      }}
-                      href={"/"}
-                    >
+                  <PrimaryLink
+                    onClick={() => {
+                      signOut().catch(console.error);
+                    }}
+                    href={"/"}
+                  >
+                    <li className="lg:hover:text-primary-700 block border-b border-gray-100 py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white lg:border-0 lg:p-0 lg:hover:bg-transparent lg:dark:hover:bg-transparent lg:dark:hover:text-white">
                       Sign Out
-                    </PrimaryLink>
-                  </li>
-                  <li className="lg:hover:text-primary-700 block border-b border-gray-100 py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white lg:border-0 lg:p-0 lg:hover:bg-transparent lg:dark:hover:bg-transparent lg:dark:hover:text-white">
-                    <PrimaryLink
-                      onClick={() => {
-                        buyCredits().catch(console.error);
-                      }}
-                      href={"/"}
-                    >
+                    </li>
+                  </PrimaryLink>
+                  <PrimaryLink
+                    onClick={() => {
+                      buyCredits().catch(console.error);
+                    }}
+                    href={"/"}
+                  >
+                    <li className="lg:hover:text-primary-700 block border-b border-gray-100 py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white lg:border-0 lg:p-0 lg:hover:bg-transparent lg:dark:hover:bg-transparent lg:dark:hover:text-white">
                       Buy Credits
-                    </PrimaryLink>
-                  </li>
+                    </li>
+                  </PrimaryLink>
                   <li className="lg:hover:text-primary-700 block border-b border-gray-100 py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white lg:border-0 lg:p-0 lg:hover:bg-transparent lg:dark:hover:bg-transparent lg:dark:hover:text-white">
                     {credits.data} Credits Remaining
                   </li>

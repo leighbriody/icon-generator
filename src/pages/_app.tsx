@@ -9,6 +9,7 @@ import { Header } from "~/components/Header";
 
 import { initFlowbite } from "flowbite";
 import { useEffect } from "react";
+import { Footer } from "~/components/Footer";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -22,6 +23,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
     <SessionProvider session={session}>
       <Header></Header>
       <Component {...pageProps} />
+      <Footer></Footer>
     </SessionProvider>
   );
 };
