@@ -7,7 +7,7 @@ export function Footer() {
           <a href="https://www.leighbriody.com" className="hover:underline">
             AssetBrainAI™
           </a>
-          . All Rights Reserved.
+          . All Rights Reserved by Leigh Briody.
         </span>
         <ul className="mt-3 flex flex-wrap items-center text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
           <li>
