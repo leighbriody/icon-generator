@@ -15,7 +15,6 @@ export const config = {
 };
 
 const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
-  console.log("-----------")
   if (req.method === "POST") {
     const buf = await buffer(req);
     const sig = req.headers["stripe-signature"] as string;
@@ -57,7 +56,6 @@ const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
 
         break;
       default:
-        console.log(`Unhandled event type ${event.type}`);
     }
 
     res.json({ received: true });
