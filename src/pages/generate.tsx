@@ -236,6 +236,7 @@ const GeneratePage: NextPage = () => {
                     className={clsx("h-full w-full rounded-full", {
                       "opacity-30": asset !== form.asset,
                     })}
+                    loading='lazy'
                   />
                 </div>
                 <span
@@ -286,6 +287,7 @@ const GeneratePage: NextPage = () => {
                     className={clsx("h-full w-full rounded-full", {
                       "opacity-30": color !== form.color,
                     })}
+                    loading='lazy'
                   />
                 </div>
                 <span
@@ -336,6 +338,7 @@ const GeneratePage: NextPage = () => {
                     className={clsx("h-full w-full rounded-full", {
                       "opacity-30": background !== form.background,
                     })}
+                    loading='lazy'
                   />
                 </div>
                 <span
@@ -382,6 +385,7 @@ const GeneratePage: NextPage = () => {
                     className={clsx("h-full w-full rounded-full", {
                       "opacity-30": shape !== form.shape,
                     })}
+                    loading='lazy'
                   />
                 </div>
                 <span
@@ -429,6 +433,7 @@ const GeneratePage: NextPage = () => {
                     className={clsx("h-full w-full rounded-full", {
                       "opacity-30": style !== form.style,
                     })}
+                    loading='lazy'
                   />
                 </div>
                 <span
@@ -478,6 +483,7 @@ const GeneratePage: NextPage = () => {
                     className={clsx("h-full w-full rounded-full", {
                       "opacity-30": isPublic !== form.isPublic,
                     })}
+                    loading='lazy'
                   />
                 </div>
                 <span
