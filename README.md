@@ -42,6 +42,8 @@ This section should list any major frameworks/libraries used to bootstrap your p
 - [![Typescript][Typescript.ts]][Typescript-url]
   <!-- trpc -->
   <!-- prisma -->
+- [![Prisma][Prisma]][Prisma-url]
+
 - [![Tailwind][Tailwind.css]][Tailwind-url]
   
   <!-- next auth -->
