@@ -35,7 +35,7 @@ Discover our game-changing web app, leveraging AI to generate mesmerizing digita
 
 ### Built using the T3 Stack
 
-
+This application was developed using the T3 stack and some other usefull tools such as vercel for deployment , and aws S3 for image storage. The T3 stack is a collection of popular libraries used for implementing full-stack TypeScript applications. It consists of Next.js, tRPC, TailwindCSS, TypeScript, and Prisma, and is focused on simplicity, modularity, and full-stack type safety.
 
 - [![Next][Next.js]][Next-url]
 - [![React][React.js]][React-url]
@@ -45,9 +45,6 @@ Discover our game-changing web app, leveraging AI to generate mesmerizing digita
 - [![Tailwind][Tailwind.css]][Tailwind-url]
 - [![S3][S3]][S3-url]
 - [![Vercel][Vercel]][Vercel-url]
-
-
-
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -87,34 +84,6 @@ _Below is an example of how you can instruct your audience on installing and set
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- USAGE EXAMPLES -->
-
-## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- ROADMAP -->
-
-## Roadmap
-
-- [x] Add Changelog
-- [x] Add back to top links
-- [ ] Add Additional Templates w/ Examples
-- [ ] Add "components" document to easily copy & paste sections of the readme
-- [ ] Multi-language Support
-  - [ ] Chinese
-  - [ ] Spanish
-
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- CONTRIBUTING -->
-
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
@@ -142,7 +111,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 ## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
+Leigh Briody - [@your_twitter](https://twitter.com/your_username) - email@example.com
 
 Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
 
@@ -192,10 +161,11 @@ Use this space to list resources you find helpful and would like to give credit 
 [Prisma]: https://img.shields.io/static/v1?style=for-the-badge&message=Prisma&color=2D3748&logo=Prisma&logoColor=FFFFFF&label=
 [Tailwind-url]: https://tailwindcss.com/
 [Tailwind.css]: https://img.shields.io/static/v1?style=for-the-badge&message=Tailwind+CSS&color=222222&logo=Tailwind+CSS&logoColor=06B6D4&label=
-
 [S3-url]: https://aws.amazon.com/pm/serv-s3/?trk=777b3ec4-de01-41fb-aa63-cde3d034a89e&sc_channel=ps&ef_id=CjwKCAjwyeujBhA5EiwA5WD7_SD2XnQKNlMuXOE8i0CFWHJjq_m67UhLDrt95D378tFHOf2_sAhCrRoCiU8QAvD_BwE:G:s&s_kwcid=AL!4422!3!638364429346!e!!g!!amazon%20s3!19096959014!142655567183
 [S3]: https://img.shields.io/static/v1?style=for-the-badge&message=Amazon+S3&color=569A31&logo=Amazon+S3&logoColor=FFFFFF&label=
+
 <!-- next auth -->
+
 [Vercel]: https://img.shields.io/static/v1?style=for-the-badge&message=Vercel&color=000000&logo=Vercel&logoColor=FFFFFF&label=
 [Vercel-url]: https://vercel.com/?utm_source=google&utm_medium=cpc&utm_campaign=17166484772&utm_campaign_id=17166484772&utm_term=vercel&utm_content=134252114617_596484707963&gad=1&gclid=EAIaIQobChMIn42Bv8Gn_wIVF7btCh1FWw5WEAAYASAAEgLBmvD_BwE
 [React-url]: https://reactjs.org/
