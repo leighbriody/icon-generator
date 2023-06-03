@@ -35,18 +35,19 @@ Discover our game-changing web app, leveraging AI to generate mesmerizing digita
 
 ### Built using the T3 Stack
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
+
 
 - [![Next][Next.js]][Next-url]
 - [![React][React.js]][React-url]
 - [![Typescript][Typescript.ts]][Typescript-url]
-  <!-- trpc -->
-  <!-- prisma -->
 - [![Prisma][Prisma]][Prisma-url]
-
+- [![Trpc][Trpc]][Trpc-url]
 - [![Tailwind][Tailwind.css]][Tailwind-url]
-  
-  <!-- next auth -->
+- [![S3][S3]][S3-url]
+- [![Vercel][Vercel]][Vercel-url]
+
+
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -185,19 +186,18 @@ Use this space to list resources you find helpful and would like to give credit 
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [Typescript.ts]: https://shields.io/badge/TypeScript-3178C6?logo=TypeScript&logoColor=FFF&style=flat-square
 [Typescript-url]: https://www.typescriptlang.org/
-[Trpc-url]: https://www.typescriptlang.org/
-[Trpc]: https://www.typescriptlang.org/
+[Trpc-url]: https://trpc.io/
+[Trpc]: https://img.shields.io/static/v1?style=for-the-badge&message=tRPC&color=2596BE&logo=tRPC&logoColor=FFFFFF&label=
 [Prisma-url]: https://www.prisma.io/
-[Prisma]: https://img.shields.io/static/v1?style=for-the-badge&message=Prismic&color=5163BA&logo=Prismic&logoColor=FFFFFF&label=
-
-<!-- prisma -->
-<!-- tailwind -->
-
+[Prisma]: https://img.shields.io/static/v1?style=for-the-badge&message=Prisma&color=2D3748&logo=Prisma&logoColor=FFFFFF&label=
 [Tailwind-url]: https://tailwindcss.com/
 [Tailwind.css]: https://img.shields.io/static/v1?style=for-the-badge&message=Tailwind+CSS&color=222222&logo=Tailwind+CSS&logoColor=06B6D4&label=
 
+[S3-url]: https://aws.amazon.com/pm/serv-s3/?trk=777b3ec4-de01-41fb-aa63-cde3d034a89e&sc_channel=ps&ef_id=CjwKCAjwyeujBhA5EiwA5WD7_SD2XnQKNlMuXOE8i0CFWHJjq_m67UhLDrt95D378tFHOf2_sAhCrRoCiU8QAvD_BwE:G:s&s_kwcid=AL!4422!3!638364429346!e!!g!!amazon%20s3!19096959014!142655567183
+[S3]: https://img.shields.io/static/v1?style=for-the-badge&message=Amazon+S3&color=569A31&logo=Amazon+S3&logoColor=FFFFFF&label=
 <!-- next auth -->
-
+[Vercel]: https://img.shields.io/static/v1?style=for-the-badge&message=Vercel&color=000000&logo=Vercel&logoColor=FFFFFF&label=
+[Vercel-url]: https://vercel.com/?utm_source=google&utm_medium=cpc&utm_campaign=17166484772&utm_campaign_id=17166484772&utm_term=vercel&utm_content=134252114617_596484707963&gad=1&gclid=EAIaIQobChMIn42Bv8Gn_wIVF7btCh1FWw5WEAAYASAAEgLBmvD_BwE
 [React-url]: https://reactjs.org/
 [Vue.js]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
 [Vue-url]: https://vuejs.org/
