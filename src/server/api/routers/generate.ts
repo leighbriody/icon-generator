@@ -38,7 +38,6 @@ async function generateIcon(prompt: string, numberOfIcons = 1) {
   }
 }
 
-
 export const generateRouter = createTRPCRouter({
   generateIcon: protectedProcedure
     .input(
