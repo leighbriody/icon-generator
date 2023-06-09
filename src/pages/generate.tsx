@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { type NextPage } from "next";
 import Head from "next/head";
-import FormGroup from "~/components/FormGroup";
 import { useEffect, useState } from "react";
 import { api } from "~/utils/api";
 import { signIn, useSession } from "next-auth/react";
@@ -504,21 +503,6 @@ const GeneratePage: NextPage = () => {
               </label>
             ))}
           </div>
-          <h2 className="mb-4 text-left text-3xl font-bold leading-tight">
-            8. How many do you want to generate? (1 credit each)
-          </h2>
-          <FormGroup>
-            <label className="mb-4 sm:col-span-3 sm:mb-0"></label>
-            <input
-              type="text"
-              required
-              inputMode="numeric"
-              pattern="[1-9]|10"
-              value={form.numberOfIcons}
-              onChange={updateForm("numberOfIcons")}
-              className="rounded-md border border-gray-300 p-2 text-black focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </FormGroup>
 
           {error && <p className="text-red-500">{error}</p>}
 
